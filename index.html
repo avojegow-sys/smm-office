@@ -1,0 +1,1746 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>SMM-офис: пиксель</title>
+<meta name="description" content="SMM-офис — пиксельная обучающая игра для SMM-щиков: строй отдел, нанимай людей, веди клиентов и разбирай метрики.">
+<meta property="og:title" content="SMM-офис: пиксельная игра для SMM-щиков">
+<meta property="og:description" content="Построй свой SMM-отдел: найм, клиенты, бюджеты и разбор метрик в пиксельном офисе.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f6e7c8">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23e8743b'/%3E%3Ctext x='8' y='12.5' font-size='11' text-anchor='middle'%3E%E2%98%95%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#4a3320;--paper:#fff6e0;--wood:#8a5a35;--acc:#e8743b;--bg:#f6e7c8;--ok:#3f9a5a;--bad:#d6483f;--soft:#8a7458;--W:#b98a5c}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--px:"Pixelify Sans","Courier New",monospace;--mono:ui-monospace,"SF Mono",Menlo,"Courier New",monospace}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:var(--mono);font-weight:600;overflow:hidden}
+.pill,.tabs button,.btn,.sheet h2,.tag,.osign,.floor span.fl,.ind,.poster,.ban,.door .exit,.bub,.float,.slapfx,.opt b,.kpi b{font-weight:700}
+.roof .sign{font-family:var(--px)}
+body,.sp,.spr{image-rendering:pixelated}
+#app{height:100dvh;max-width:520px;margin:0 auto;display:flex;flex-direction:column;position:relative;background:var(--bg)}
+.hud{display:flex;gap:5px;padding:7px 8px 4px;align-items:center;justify-content:space-between}
+.pill{background:var(--paper);border:3px solid var(--ink);box-shadow:0 3px 0 var(--ink);padding:2px 7px;font-size:12px;font-weight:700;white-space:nowrap;font-family:inherit;color:var(--ink)}
+.trust{display:inline-block;width:42px;height:8px;background:#e8d5b0;border:2px solid var(--ink);vertical-align:middle;margin-left:4px}
+.trust i{display:block;height:100%;background:var(--ok);transition:width .5s}
+.ap b{color:var(--acc)}
+button.pill{cursor:pointer}
+.tabs{display:flex;gap:6px;padding:4px 8px 8px}
+.tabs button{flex:1;font-family:inherit;font-weight:700;font-size:13px;padding:5px;border:3px solid var(--ink);background:#f1deb5;color:var(--ink);cursor:pointer}
+.tabs button.on{background:var(--acc);color:#fff}
+.stage{flex:1;position:relative;margin:0 8px;min-height:0}
+.view{position:absolute;inset:0;display:none}
+.view.on{display:flex;flex-direction:column}
+/* ---------- вид снаружи ---------- */
+#outside{overflow:hidden;border:3px solid var(--ink);background:linear-gradient(#8fd0ff 0 28%,#aee0ff 28% 52%,#d4f0ff 52% 74%,#fff2d6 74%)}
+.osun{position:absolute;right:10%;top:6%;width:30px;height:30px;background:#ffd86b;box-shadow:0 0 0 4px #ffe9a0,0 0 0 8px rgba(255,233,160,.4)}
+.ocloud{position:absolute;animation:drift 60s linear infinite}
+@keyframes drift{from{transform:translateX(-120px)}to{transform:translateX(560px)}}
+.oplane{position:absolute;top:14%;left:-140px;display:flex;align-items:center;animation:flyo 18s linear infinite}
+@keyframes flyo{to{left:115%}}
+.ban{background:#fff;border:2px solid #d6483f;color:#d6483f;font-size:8px;font-weight:700;padding:1px 4px;margin-right:-2px;white-space:nowrap}
+.ohills{position:absolute;left:0;right:0;bottom:22%;height:60px;background-repeat:repeat-x;background-size:auto 100%}
+.obuild{position:absolute;left:24%;right:20%;bottom:19%;display:flex;flex-direction:column;cursor:pointer}
+.scaf{height:34px;border:3px dashed var(--wood);border-bottom:0;margin:0 6px;background:repeating-linear-gradient(45deg,rgba(138,90,53,.25) 0 4px,transparent 4px 10px);font-size:10px;text-align:center;padding-top:8px;font-weight:700;color:var(--wood)}
+.osign{background:var(--wood);color:#fff;text-align:center;font-weight:700;font-size:12px;letter-spacing:1px;padding:4px 6px;border:3px solid var(--ink);border-bottom:0}
+.ofloor{height:62px;border:3px solid var(--ink);border-top:0;background:#e9b58a;background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.08) 0 2px,transparent 2px 10px),repeating-linear-gradient(90deg,rgba(0,0,0,.06) 0 2px,transparent 2px 18px);display:flex;align-items:flex-end;justify-content:space-around;padding:0 6px 8px;gap:8px;position:relative}
+.ofloor.f2{background-color:#d9a078}
+.ow{width:34%;height:44px;border:4px solid #fff6e0;box-shadow:0 0 0 3px var(--ink);background:#3e4a66;position:relative;overflow:hidden}
+.ow.lit{background:#ffe9a8}
+.ow .spr{position:absolute;left:50%;margin-left:-18px;bottom:-14px}
+.ow::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:3px;background:#fff6e0}
+.ofloor .od{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:96px;display:flex;flex-direction:column;align-items:center}
+.awn{width:96px;height:12px;background:repeating-linear-gradient(90deg,#d6483f 0 12px,#fff6e0 12px 24px);border:3px solid var(--ink);margin-bottom:-2px;position:relative;z-index:1}
+.ogr{position:absolute;left:0;right:0;bottom:0;height:19%}
+.sidewalk{position:absolute;left:0;right:0;top:0;height:34%;background:#e4d3b0;border-top:4px solid #c8b48a}
+.road{position:absolute;left:0;right:0;top:34%;bottom:0;background:#6a6a78;background-image:repeating-linear-gradient(90deg,#f2e6b8 0 24px,transparent 24px 52px);background-size:100% 4px;background-repeat:repeat-x;background-position:0 55%}
+.car{position:absolute;animation:carr 9s linear infinite}
+@keyframes carr{from{left:-80px}to{left:105%}}
+.car.l{animation-name:carl}
+@keyframes carl{from{left:105%}to{left:-80px}}
+.ped{position:absolute;animation:pedr 26s linear infinite}
+@keyframes pedr{from{left:-60px}to{left:105%}}
+.ohint{position:absolute;left:0;right:0;top:4px;text-align:center;font-size:11px;font-weight:700;color:var(--ink);opacity:.8}
+/* ---------- вид внутри ---------- */
+.roof{height:26px;margin:0 0;position:relative;display:flex;justify-content:center;align-items:flex-end;flex:none}
+.roof .sign{background:var(--wood);color:#fff;font-weight:700;font-size:12px;letter-spacing:1.5px;padding:3px 14px;border:3px solid var(--ink);border-bottom:0;position:relative;z-index:1}
+.roof .ant{position:absolute;left:22%;bottom:0;width:4px;height:22px;background:var(--ink)}
+.roof .ant::before{content:"";position:absolute;top:-6px;left:-3px;width:10px;height:10px;background:#e5524d;border:2px solid var(--ink);animation:blinkA 1.2s steps(2) infinite}
+@keyframes blinkA{50%{opacity:.2}}
+.building{flex:1;position:relative;border:3px solid var(--ink);overflow:hidden;background:#fff;min-height:0}
+.floors{position:absolute;inset:0;display:flex;flex-direction:column}
+.floor{flex:1;position:relative;border-bottom:4px solid var(--ink);overflow:hidden;background-image:repeating-linear-gradient(90deg,rgba(120,80,40,.07) 0 12px,transparent 12px 24px)}
+.floor:last-child{border-bottom:0}
+.floor.f2{background-color:#f4e2c0}
+.floor.f1{background-color:#e2ecc8}
+.floor.f0{background-color:#f7d9c4}
+.floor::after{content:"";position:absolute;left:0;right:0;bottom:0;height:12px;background:repeating-linear-gradient(90deg,#b98a5c 0 18px,#a87a4e 18px 20px);border-top:3px solid var(--ink)}
+.floor span.fl{position:absolute;left:6px;top:3px;font-size:9px;font-weight:700;color:var(--soft);z-index:3}
+.win{position:absolute;top:15%;height:30%;width:24%;border:4px solid var(--W);box-shadow:0 0 0 3px var(--ink);overflow:hidden;background:linear-gradient(#a8dcff 0 45%,#c8ecff 45% 75%,#ffeccc 75%)}
+.win::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:3px;background:var(--W);z-index:6}
+.win::after{content:"";position:absolute;top:55%;left:0;right:0;height:3px;background:var(--W);z-index:6}
+.win.pano{left:3%;top:11%;width:64%;height:41%}
+.win.pano::before{left:33%}
+.win.pano::after{top:0;bottom:0;left:66%;right:auto;width:3px;height:auto}
+.win .sun{position:absolute;right:10%;top:10%;width:14px;height:14px;background:#ffd86b;box-shadow:0 0 0 3px #ffe9a0}
+.win .cl{position:absolute;animation:drift2 40s linear infinite}
+@keyframes drift2{from{transform:translateX(-60px)}to{transform:translateX(320px)}}
+.win .hl{position:absolute;left:0;right:0;bottom:0;height:42%;background-repeat:repeat-x;background-size:auto 100%}
+.veh{position:absolute;z-index:4;display:flex;align-items:center;left:-60%}
+.veh.plane{top:14%;animation:fly 11s linear infinite}
+.veh.blimp{top:10%;animation:fly 24s linear infinite}
+.veh.birds{top:24%;animation:fly 16s linear infinite}
+.veh.balloon{top:18%;left:28%;animation:bob2s 4s steps(6) infinite alternate}
+@keyframes fly{to{left:115%}}
+@keyframes bob2s{to{transform:translate(14px,-10px)}}
+.deco{position:absolute;z-index:1;bottom:12px;transform:translateX(-50%)}
+.poster{position:absolute;top:19%;width:15%;min-height:28px;transform:translateX(-50%) rotate(-2deg);background:#fffbe8;border:3px solid var(--ink);padding:2px;font-size:8px;line-height:1.15;font-weight:700;text-align:center;color:#d6483f;box-shadow:2px 2px 0 rgba(0,0,0,.2);z-index:1}
+.clock{position:absolute;top:21%;width:24px;height:24px;background:#fff;border:3px solid var(--ink);transform:translateX(-50%);z-index:1}
+.clock::before,.clock::after{content:"";position:absolute;left:50%;top:50%;background:var(--ink);transform-origin:bottom center}
+.clock::before{width:2px;height:8px;margin-left:-1px;margin-top:-8px;animation:spinc 12s steps(12) infinite}
+.clock::after{width:2px;height:5px;margin-left:-1px;margin-top:-5px;animation:spinc 144s steps(12) infinite}
+@keyframes spinc{to{transform:rotate(360deg)}}
+.cat{position:absolute;bottom:12px;z-index:1;animation:catw 24s linear infinite}
+@keyframes catw{0%{left:42%;transform:scaleX(-1)}40%{left:66%;transform:scaleX(-1)}50%{left:66%;transform:scaleX(1)}90%{left:42%;transform:scaleX(1)}100%{left:42%;transform:scaleX(-1)}}
+.door{position:absolute;left:2%;bottom:12px;z-index:2;cursor:pointer;display:flex;flex-direction:column;align-items:center}
+.door .exit{font-size:9px;font-weight:700;background:#fff6e0;border:2px solid var(--ink);padding:0 4px;margin-bottom:2px}
+.mat{position:absolute;left:1%;bottom:12px;width:13%;height:6px;background:repeating-linear-gradient(90deg,#d6483f 0 6px,#a83530 6px 12px);border:2px solid var(--ink);z-index:1}
+.shaft{position:absolute;right:0;top:0;bottom:0;width:13%;background:repeating-linear-gradient(90deg,#4a3f3a 0 6px,#5a4e48 6px 8px);border-left:3px solid var(--ink);z-index:2}
+.ind{position:absolute;left:50%;transform:translateX(-50%);font-size:10px;font-weight:700;background:#2b2320;color:#8a7458;border:2px solid var(--ink);padding:0 5px;z-index:2}
+.ind.on{background:#ffd24a;color:var(--ink)}
+.car-e{position:absolute;right:0;width:13%;height:33.333%;z-index:4;transition:bottom .85s steps(14);background:#ffe9a8;border:3px solid var(--ink);border-bottom-width:12px;overflow:hidden;box-shadow:inset 0 0 0 3px #d9a95a}
+.car-e .dl,.car-e .dr{position:absolute;top:0;bottom:0;width:50%;background:repeating-linear-gradient(0deg,#9aa4b0 0 6px,#8590a0 6px 8px);border:2px solid var(--ink);transition:transform .4s steps(5);z-index:7}
+.car-e .dl{left:0}.car-e .dr{right:0}
+.car-e.open .dl{transform:translateX(-96%)}
+.car-e.open .dr{transform:translateX(96%)}
+.st{position:absolute;width:24%;display:flex;flex-direction:column;align-items:center;cursor:pointer;z-index:3;transform:translate(-50%,calc(var(--lift,0px)*-1));transition:transform .25s}
+.st.atdesk{--lift:17px}
+.st.flip .pc .spr{transform:scaleX(-1)}
+.st.sad .pc{filter:saturate(.4) brightness(.9)}
+.tag{font-size:9.5px;font-weight:700;background:#fff6e0;border:2px solid var(--ink);padding:0 5px;margin-bottom:2px;white-space:nowrap}
+.pc{margin-bottom:0;position:relative;z-index:1}
+.dk{position:relative;z-index:2}
+.dk-el{position:absolute;z-index:4;transform:translateX(-50%);pointer-events:none}
+.vase{position:absolute;right:4px;top:-18px}
+.ghost{opacity:.7;font-size:11px;font-weight:700;border:3px dashed var(--soft);padding:5px 7px;margin-bottom:4px;background:rgba(255,246,224,.7);text-align:center}
+.mood{font-size:12px;position:absolute;top:26px;right:10%;z-index:3}
+.bub{position:absolute;bottom:100%;margin-bottom:3px;left:50%;transform:translateX(-50%);background:#fff;border:3px solid var(--ink);padding:1px 6px;font-size:10px;font-weight:700;white-space:nowrap;z-index:8;animation:pop 3s steps(8) forwards;pointer-events:none}
+.bub.stay{animation:none}
+@keyframes pop{0%{opacity:0}10%,85%{opacity:1}100%{opacity:0}}
+.sp{display:block;background-size:100% 100%;background-repeat:no-repeat}
+.spr{background-repeat:no-repeat;animation:idl 1.5s steps(2) infinite}
+@keyframes idl{from{background-position:0 0}to{background-position:calc(var(--w)*-2) 0}}
+@keyframes walkk{from{background-position:calc(var(--w)*-2) 0}to{background-position:calc(var(--w)*-4) 0}}
+.walk .spr,.spr.w{animation:walkk .3s steps(2) infinite}
+.player{position:absolute;z-index:6;transform:translateX(-50%);transition:left .4s linear,bottom .85s steps(14);pointer-events:none;padding-top:8px}
+.player.flip .spr{transform:scaleX(-1)}
+.player .you{position:absolute;top:-4px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;background:var(--acc);color:#fff;border:2px solid var(--ink);padding:0 4px}
+.actor{position:absolute;z-index:6;transform:translateX(-50%);transition:left .4s linear,bottom .85s steps(14),opacity .4s;pointer-events:none;padding-top:8px}
+.actor.flip .spr{transform:scaleX(-1)}
+.actor .you{position:absolute;top:-4px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;background:#3b6fb5;color:#fff;border:2px solid var(--ink);padding:0 4px;white-space:nowrap}
+.vis{position:absolute;z-index:3;transform:translateX(-50%);cursor:pointer;display:flex;flex-direction:column;align-items:center;transition:left 2s linear,opacity .4s}
+.vis.flip .spr{transform:scaleX(-1)}
+.deco.cof{cursor:pointer;z-index:2}
+.cofstat{position:absolute;left:50%;bottom:100%;width:44px;height:24px;transform:translateX(-50%);pointer-events:none}
+.cofsteam{position:absolute;left:50%;bottom:0;width:14px;height:20px;transform:translateX(-50%)}
+.cofsteam i{position:absolute;bottom:0;width:3px;height:3px;background:#cfc6b8;opacity:0;animation:steamr 2s steps(8) infinite}
+.cofsteam i:nth-child(1){left:2px}
+.cofsteam i:nth-child(2){left:6px;animation-delay:.6s}
+.cofsteam i:nth-child(3){left:10px;animation-delay:1.2s}
+@keyframes steamr{0%{opacity:.9;transform:translateY(0)}100%{opacity:0;transform:translateY(-18px)}}
+.cofwarn{position:absolute;right:50%;margin-right:-8px;bottom:0;font-size:10px;font-weight:700;background:#fff;border:2px solid var(--bad);color:var(--bad);padding:0 4px;white-space:nowrap;animation:blinkA .8s steps(2) infinite}
+.shake{animation:shk .14s steps(2) infinite}
+@keyframes shk{from{transform:translateX(-50%)}to{transform:translateX(-50%) translateY(-3px)}}
+.tst{position:absolute;left:50%;top:92px;transform:translateX(-50%);z-index:25;max-width:92%;text-align:center;background:#fff6e0;border:3px solid var(--ink);box-shadow:0 3px 0 var(--ink);padding:5px 10px;font-weight:700;font-size:12px;animation:tstA 3s steps(12) forwards;pointer-events:none}
+@keyframes tstA{0%{opacity:0;transform:translate(-50%,-8px)}8%,85%{opacity:1;transform:translate(-50%,0)}100%{opacity:0}}
+/* улица: кофейня и цветочный */
+.ocafe,.ofl{position:absolute;bottom:19%;border:3px solid var(--ink);border-bottom:0;cursor:pointer;z-index:1}
+.ocafe{left:0;width:24%;height:36%;background:#d9a0b0}
+.ofl{right:0;width:20%;height:34%;background:#a9c7a0}
+.ocsign{margin:5px 3px 0;font-size:8px;line-height:1.1;font-weight:700;text-align:center;background:#fff6e0;border:2px solid var(--ink)}
+.ocwin{position:absolute;left:8%;right:8%;top:30%;height:30%;background:#ffe9a8;border:3px solid #fff6e0;box-shadow:0 0 0 2px var(--ink);overflow:hidden}
+.ocwin .spr{position:absolute;left:50%;margin-left:-19px;bottom:-14px}
+.ocawn{position:absolute;left:-3px;right:-3px;top:60%;height:10px;border:2px solid var(--ink)}
+.ocafe .ocawn{background:repeating-linear-gradient(90deg,#3f9a5a 0 8px,#fff6e0 8px 16px)}
+.ofl .ocawn{background:repeating-linear-gradient(90deg,#e8789a 0 8px,#fff6e0 8px 16px)}
+.ocdoor{position:absolute;left:50%;bottom:0;transform:translateX(-50%)}
+.ochint{position:absolute;top:-22px;left:50%;transform:translateX(-50%);background:#fff;border:2px solid var(--ink);padding:0 4px;font-size:10px;font-weight:700;white-space:nowrap;animation:blinkA 1.4s steps(2) infinite}
+.ofbox{position:absolute;left:4px;bottom:-1px}
+.opl{position:absolute;bottom:2px;transform:translateX(-50%);z-index:5;transition:left .4s linear}
+.opl.flip .spr{transform:scaleX(-1)}
+/* ---------- UI ---------- */
+.bar{display:flex;gap:8px;padding:10px 8px 12px}
+.btn{flex:1;font-family:inherit;border:3px solid var(--ink);background:var(--paper);box-shadow:0 4px 0 var(--ink);padding:10px;font-weight:700;font-size:15px;color:var(--ink);cursor:pointer}
+.btn.pri{background:var(--acc);color:#fff}
+.btn:disabled{opacity:.4}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+.overlay{position:absolute;inset:0;background:rgba(60,40,20,.5);display:none;align-items:flex-end;z-index:20}
+.overlay.on{display:flex}
+.sheet{background:var(--paper);width:100%;border:3px solid var(--ink);border-bottom:0;padding:14px 14px 18px;max-height:88%;overflow:auto;animation:up .25s steps(5)}
+@keyframes up{from{transform:translateY(40px);opacity:0}}
+.sheet h2{margin:0 0 4px;font-size:19px}
+.sheet .sub{color:var(--soft);font-size:13px;margin-bottom:10px}
+.sheet p{margin:6px 0;font-size:14px;line-height:1.35}
+.opt{display:block;width:100%;text-align:left;font-family:inherit;border:3px solid var(--ink);background:#fff;box-shadow:0 3px 0 var(--ink);padding:9px 11px;margin:9px 0;font-size:14px;cursor:pointer;color:var(--ink)}
+.opt b{display:block;font-size:14px}.opt small{color:var(--soft);font-size:12px}
+.opt:disabled{opacity:.4}
+.opt:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
+.srow{display:flex;gap:8px;align-items:center}
+.row{display:flex;gap:8px;margin-top:12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.kpi{background:#fff;border:3px solid var(--ink);padding:6px 9px}
+.kpi small{display:block;color:var(--soft);font-size:11px}.kpi b{font-size:17px}
+.kpi.ok{background:#e0f4df;border-color:var(--ok)}.kpi.bad{background:#fde4e2;border-color:var(--bad)}
+.note{background:#fff0c8;border:2px solid var(--ink);padding:8px 10px;font-size:13px;line-height:1.35;margin:8px 0}
+.note.good{background:#dff2d8}.note.warn{background:#fcdcd8}
+input[type=range]{width:100%;accent-color:var(--acc)}
+.seg{display:flex;gap:6px}.seg button{flex:1;font-family:inherit;border:3px solid var(--ink);background:#fff;padding:7px;font-size:13px;font-weight:700;color:var(--ink)}
+.seg button.on{background:#ffd9b8}
+.float{position:absolute;z-index:9;font-weight:700;font-size:13px;animation:fl 1.2s steps(10) forwards;pointer-events:none;transform:translateX(-50%);text-shadow:0 2px 0 #fff}
+@keyframes fl{to{transform:translate(-50%,-40px);opacity:0}}
+.cf{position:absolute;top:-12px;width:9px;height:9px;z-index:40;pointer-events:none;animation:cff 2.4s linear forwards}
+@keyframes cff{to{transform:translate(var(--dx),105vh) rotate(var(--r))}}
+.slapfx{position:absolute;z-index:30;font-size:22px;font-weight:700;pointer-events:none;animation:slp .5s steps(5) forwards;transform:translateX(-50%)}
+@keyframes slp{from{transform:translate(-50%,0) scale(.4)}60%{transform:translate(-50%,-10px) scale(1.3)}to{transform:translate(-50%,-22px) scale(1);opacity:0}}
+.big{display:flex;align-items:flex-end;gap:10px}
+.cands{display:flex;gap:6px;margin:8px 0}
+.cand{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:3px;font-family:inherit;border:3px solid var(--ink);background:#fff;box-shadow:0 3px 0 var(--ink);padding:6px 3px;cursor:pointer;color:var(--ink);text-align:center}
+.cand.on{background:#ffd9b8}
+.cand b{font-size:13px}.cand small{font-size:10.5px;color:var(--soft);line-height:1.25}.cand em{font-size:10px;font-style:normal;line-height:1.2}
+.stars{color:#e8a020;letter-spacing:1px}
+.cw{position:absolute;z-index:3;transform:translateX(-50%);cursor:pointer;display:flex;flex-direction:column;align-items:center;transition:left 2s linear,opacity .4s}
+.cw.flip .spr{transform:scaleX(-1)}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="hud">
+    <div class="pill" id="hWeek"></div>
+    <div class="pill" id="hBudget"></div>
+    <div class="pill">🤝<span class="trust"><i id="hTrust"></i></span></div>
+    <div class="pill ap" id="hAp"></div>
+    <button class="pill" id="hSnd">🔊</button>
+  </div>
+  <div class="tabs"><button id="tIn" class="on">🏢 Офис</button><button id="tOut">🏙 Улица</button><button id="tGuest">🤝 Гости</button></div>
+  <div class="stage">
+    <div class="view on" id="inside"><div class="roof"><div class="ant"></div><div class="sign">SMM-OFFICE</div></div><div class="building" id="bld"></div></div>
+    <div class="view" id="outside"></div>
+  </div>
+  <div class="bar">
+    <button class="btn" id="bBrief">📋 Бриф</button>
+    <button class="btn pri" id="bLaunch">🚀 Запуск недели</button>
+  </div>
+  <div class="overlay" id="ov"><div class="sheet" id="sheet"></div></div>
+</div>
+
+<script>
+"use strict";
+const $=s=>document.querySelector(s);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const fmt=n=>Math.round(n).toLocaleString('ru-RU');
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+const rpick=a=>a[Math.floor(Math.random()*a.length)];
+const shuffle=a=>a.slice().sort(()=>Math.random()-.5);
+const ELEV=93.5, FLOOR_H=100/3, GROUND=12;
+const INK='#4a3320';
+const AP_MAX=6, TECH_COST=3000, MIN_AD=15000;
+const CAFE_X=12, DOOR_X=52, FLOWER_X=90;
+
+/* =====================  ПИКСЕЛЬ-ГРАФИКА  ===================== */
+function shade(h,k){const n=parseInt(h.slice(1),16);let r=n>>16,g=n>>8&255,b=n&255;r=Math.round(r*k);g=Math.round(g*k);b=Math.round(b*k);return '#'+[r,g,b].map(v=>clamp(v,0,255).toString(16).padStart(2,'0')).join('')}
+function outline(g,w,h){
+  const d=g.getImageData(0,0,w,h),a=d.data,add=[];
+  const A=(x,y)=>x>=0&&y>=0&&x<w&&y<h&&a[(y*w+x)*4+3]>0;
+  for(let y=0;y<h;y++)for(let x=0;x<w;x++)if(!A(x,y)&&(A(x-1,y)||A(x+1,y)||A(x,y-1)||A(x,y+1)))add.push([x,y]);
+  g.fillStyle=INK;add.forEach(p=>g.fillRect(p[0],p[1],1,1));
+}
+const SPRITES={};
+function mk(name,w,h,fn,ol=true){
+  const pad=ol?1:0,c=document.createElement('canvas');c.width=w+pad*2;c.height=h+pad*2;
+  const g=c.getContext('2d');g.translate(pad,pad);
+  const R=(x,y,ww,hh,col)=>{g.fillStyle=col;g.fillRect(x,y,ww,hh)};
+  fn(R,g);g.setTransform(1,0,0,1,0,0);if(ol)outline(g,c.width,c.height);
+  SPRITES[name]={url:c.toDataURL(),w:c.width,h:c.height};
+}
+function sp(name,s=3,style=''){const o=SPRITES[name];return `<i class="sp" style="width:${o.w*s}px;height:${o.h*s}px;background-image:url(${o.url});${style}"></i>`}
+function spUrl(name){return SPRITES[name].url}
+
+/* --- персонажи: лист 4 кадра (покой, покой-bob, шаг A, шаг B) --- */
+const FW=19,FH=27;
+const LOOK={
+ me:{skin:'#ffd9b5',hair:'messy',hc:'#5b3a29',shirt:'#e8743b',pants:'#3d4a6b',shoe:'#fff6e0',eyes:'happy',mouth:'smile',acc:['cap','badge','hoodie']},
+ des:{skin:'#ffdcc2',hair:'long',hc:'#d9487a',shirt:'#f08fa6',pants:'#5b4a8a',shoe:'#fff6e0',eyes:'happy',mouth:'tongue',acc:['beret','pencil','splat']},
+ cop:{skin:'#f2c9a0',hair:'messy',hc:'#2f2a2a',shirt:'#6ba5e8',pants:'#4a4a55',shoe:'#7a5a3a',eyes:'tired',mouth:'meh',acc:['mug']},
+ tgt:{skin:'#e6b98f',hair:'short',hc:'#2a1f1a',shirt:'#58c4a0',pants:'#2f3b4f',shoe:'#fff6e0',eyes:'happy',mouth:'smirk',acc:['headset','target']},
+ ana:{skin:'#ffd5b8',hair:'bun',hc:'#6b3fa0',shirt:'#b58be6',pants:'#3b2f55',shoe:'#fff6e0',eyes:'happy',mouth:'smile',acc:['glasses','chart']},
+ boss:{skin:'#f7cba6',hair:'pony',hc:'#f2c14e',shirt:'#e8a15a',pants:'#2b2b2b',shoe:'#c0392b',eyes:'happy',mouth:'smirk',acc:['sunglasses','phone','earring','lapel']},
+ cl1:{skin:'#f2c9a0',hair:'short',hc:'#5a3a2a',shirt:'#fff6e0',pants:'#4a4a55',shoe:'#6b4a2a',eyes:'happy',mouth:'smile',acc:['chef','apron']},
+ cl2:{skin:'#e6b98f',hair:'short',hc:'#2a1f1a',shirt:'#3a3f55',pants:'#222',shoe:'#222',eyes:'happy',mouth:'smirk',acc:['mustache']},
+ vis:{skin:'#f2c9a0',hair:'short',hc:'#5a3a2a',shirt:'#fff6e0',pants:'#4a4a55',shoe:'#6b4a2a',eyes:'happy',mouth:'smile',acc:['briefcase']},
+ p1:{skin:'#e6b98f',hair:'short',hc:'#5a3a2a',shirt:'#e5524d',pants:'#3d4a6b',shoe:'#fff6e0',eyes:'happy',mouth:'smile',acc:[]},
+ p2:{skin:'#ffd9b5',hair:'bun',hc:'#222',shirt:'#5bc0ff',pants:'#555',shoe:'#fff6e0',eyes:'happy',mouth:'smile',acc:[]},
+ p3:{skin:'#f2c9a0',hair:'long',hc:'#888',shirt:'#7bc46b',pants:'#6b4a2a',shoe:'#fff6e0',eyes:'happy',mouth:'smile',acc:[]},
+ tech:{skin:'#e6b98f',hair:'short',hc:'#3a2a1a',shirt:'#3b6fb5',pants:'#2f3b4f',shoe:'#6b4a2a',eyes:'happy',mouth:'smile',acc:['hardhat','wrench']},
+ barista:{skin:'#f2c9a0',hair:'bun',hc:'#6b3a1a',shirt:'#4f8a5a',pants:'#3a3a3a',shoe:'#fff6e0',eyes:'happy',mouth:'smile',acc:['apron']},
+ florist:{skin:'#ffd5b8',hair:'pony',hc:'#8a5a35',shirt:'#e8789a',pants:'#6b4a2a',shoe:'#fff6e0',eyes:'happy',mouth:'smile',acc:['earring','apron']}
+};
+function drawChar(g,c,Y,lL,lR){
+  const ox=1,oy=2;
+  const R=(x,y,w,h,col)=>{g.fillStyle=col;g.fillRect(x+ox,y+oy,w,h)};
+  const has=a=>c.acc.includes(a),dk='#2a1f1a',sh2=shade(c.shirt,.82);
+  // ноги
+  const leg=(x,lift)=>{R(x,18+Y,2,4-Y-lift,c.pants);R(x-1,22-lift,3,2,c.shoe)};
+  leg(5,lL);leg(9,lR);
+  // руки и тело
+  R(3,12+Y,1,5,c.shirt);R(12,12+Y,1,5,c.shirt);
+  R(3,17+Y,1,1,c.skin);R(12,17+Y,1,1,c.skin);
+  R(4,11+Y,8,7,c.shirt);R(4,17+Y,8,1,sh2);
+  if(has('hoodie')){R(6,12+Y,1,3,'#fff6e0');R(9,12+Y,1,3,'#fff6e0')}
+  if(has('badge')){R(8,11+Y,1,2,'#5b8def');R(7,13+Y,3,2,'#fff6e0');R(8,14+Y,1,1,'#d6483f')}
+  if(has('splat')){R(5,13+Y,1,1,'#ffd24a');R(9,15+Y,1,1,'#5b8def');R(7,12+Y,1,1,'#3dae7a');R(10,13+Y,1,1,'#ff5da2')}
+  if(has('lapel')){R(6,11+Y,1,3,'#fff6e0');R(9,11+Y,1,3,'#fff6e0');R(7,11+Y,2,1,'#c0392b')}
+  if(has('apron')){R(5,13+Y,6,5,'#fff6e0');R(5,12+Y,1,1,'#fff6e0');R(10,12+Y,1,1,'#fff6e0');R(7,15+Y,2,1,'#d9c9a0')}
+  if(has('wrench')){R(12,12+Y,3,2,'#c8d0d8');R(13,14+Y,1,4,'#9aa4b0')}
+  if(has('chart')){R(0,14+Y,3,3,'#fff6e0');R(0,16+Y,1,1,'#3dae7a');R(1,15+Y,1,1,'#3dae7a');R(2,14+Y,1,1,'#3dae7a')}
+  if(has('phone')){R(1,14+Y,2,3,'#222');R(1,14+Y,1,1,'#7fd1ff')}
+  if(has('briefcase')){R(0,16+Y,4,3,'#8a5a35');R(1,15+Y,2,1,'#6b4a2a')}
+  if(has('mug')){R(13,15+Y,3,3,'#fff6e0');R(13,15+Y,3,1,'#7a4a2a');R(16,16+Y,1,1,'#fff6e0');R(14,13+Y,1,1,'#d8d0c4');R(15,12+Y,1,1,'#d8d0c4')}
+  // длинные волосы сзади
+  if(c.hair==='long'){R(2,3+Y,2,11,c.hc);R(12,3+Y,2,11,c.hc)}
+  if(c.hair==='pony'){R(13,4+Y,2,6,c.hc);R(13,4+Y,2,1,'#d6483f')}
+  // голова
+  R(3,2+Y,10,9,c.skin);
+  g.clearRect(3+ox,2+Y+oy,1,1);g.clearRect(12+ox,2+Y+oy,1,1);g.clearRect(3+ox,10+Y+oy,1,1);g.clearRect(12+ox,10+Y+oy,1,1);
+  R(2,6+Y,1,2,c.skin);R(13,6+Y,1,2,c.skin);
+  // волосы
+  const hc=c.hc;
+  if(c.hair==='messy'){R(3,1+Y,10,3,hc);R(4,0+Y,2,1,hc);R(8,0+Y,2,1,hc);R(11,0+Y,1,1,hc);R(2,3+Y,1,3,hc);R(13,3+Y,1,2,hc);R(3,4+Y,3,1,hc);R(10,4+Y,3,1,hc)}
+  else if(c.hair==='short'||c.hair==='bun'){R(3,1+Y,10,3,hc);R(2,3+Y,1,3,hc);R(13,3+Y,1,3,hc);R(3,4+Y,2,1,hc);R(11,4+Y,2,1,hc);if(c.hair==='bun'){R(6,-1+Y,4,2,hc)}}
+  else if(c.hair==='long'){R(3,1+Y,10,3,hc);R(2,3+Y,1,4,hc);R(13,3+Y,1,4,hc);R(3,4+Y,3,1,hc);R(9,4+Y,4,1,hc)}
+  else if(c.hair==='pony'){R(3,1+Y,10,3,hc);R(2,3+Y,1,3,hc);R(3,4+Y,3,1,hc);R(10,4+Y,3,1,hc)}
+  // шапки
+  if(has('cap')){R(3,1+Y,10,2,'#e5524d');R(3,0+Y,9,1,'#e5524d');R(9,3+Y,6,1,'#b8372f');R(5,1+Y,1,1,'#fff6e0')}
+  if(has('beret')){R(2,0+Y,11,3,'#e5524d');R(7,-1+Y,2,1,'#e5524d');R(3,0+Y,2,1,'#f26f6a')}
+  if(has('hardhat')){R(3,0+Y,10,4,'#ffd24a');R(2,3+Y,12,1,'#e0b030');R(7,-1+Y,2,1,'#ffd24a');R(4,1+Y,2,1,'#fff0a0')}
+  if(has('chef')){R(3,0+Y,10,3,'#fff6e0');R(4,-1+Y,8,1,'#fff6e0');R(3,3+Y,10,1,'#d9d0c0')}
+  // глаза
+  const eye=(x)=>{ if(c.eyes==='tired'){R(x,6+Y,2,1,dk);R(x,5+Y,2,1,c.skin);R(x,8+Y,2,1,'#b79ac8')} else {R(x,6+Y,2,2,dk);R(x,6+Y,1,1,'#fff')} };
+  if(!has('sunglasses')){eye(5);eye(9)}
+  R(4,8+Y,1,1,'#ff9aa8');R(11,8+Y,1,1,'#ff9aa8');
+  // очки
+  const ring=(x,col)=>{R(x,5+Y,4,1,col);R(x,8+Y,4,1,col);R(x,5+Y,1,4,col);R(x+3,5+Y,1,4,col)};
+  if(has('glasses')){ring(4,'#3a2a50');ring(8,'#3a2a50')}
+  if(has('target')){ring(4,'#d6322e');ring(8,'#d6322e');R(3,7+Y,1,1,'#d6322e');R(12,7+Y,1,1,'#d6322e')}
+  if(has('sunglasses')){R(4,5+Y,8,3,'#161616');R(3,5+Y,1,1,'#161616');R(12,5+Y,1,1,'#161616');R(5,5+Y,1,1,'#fff');R(9,5+Y,1,1,'#fff')}
+  // рот
+  const m=c.mouth,mc='#7a2f2f';
+  if(m==='smile'){R(6,9+Y,1,1,mc);R(9,9+Y,1,1,mc);R(7,10+Y,2,1,mc)}
+  else if(m==='tongue'){R(6,9+Y,1,1,mc);R(9,9+Y,1,1,mc);R(7,10+Y,1,1,mc);R(8,10+Y,1,1,'#ff7a90')}
+  else if(m==='meh'){R(7,10+Y,3,1,mc)}
+  else if(m==='smirk'){R(6,10+Y,3,1,mc);R(9,9+Y,1,1,mc)}
+  if(has('mustache')){R(5,9+Y,6,1,'#2a1f1a');R(4,10+Y,1,1,'#2a1f1a');R(11,10+Y,1,1,'#2a1f1a')}
+  // аксессуары головы
+  if(has('headset')){R(2,1+Y,12,1,'#8a8aa0');R(1,5+Y,2,4,'#3a3a4a');R(13,5+Y,2,4,'#3a3a4a');R(2,9+Y,1,2,'#3a3a4a');R(3,11+Y,3,1,'#3a3a4a')}
+  if(has('pencil')){R(12,2+Y,1,4,'#ffd24a');R(12,6+Y,1,1,'#f2c9a0')}
+  if(has('earring')){R(2,8+Y,1,1,'#ffd24a')}
+}
+const SHEET={};
+function makeSheet(id){
+  const c=document.createElement('canvas');c.width=FW*4;c.height=FH;const G=c.getContext('2d');
+  const frames=[[0,0,0],[1,0,0],[0,1,0],[0,0,1]];
+  frames.forEach((f,i)=>{
+    const t=document.createElement('canvas');t.width=FW;t.height=FH;const g=t.getContext('2d');
+    drawChar(g,LOOK[id],f[0],f[1],f[2]);outline(g,FW,FH);G.drawImage(t,i*FW,0);
+  });
+  SHEET[id]=c.toDataURL();
+}
+function charEl(id,s=3,cls=''){return `<div class="spr ${cls}" style="--w:${FW*s}px;width:${FW*s}px;height:${FH*s}px;background-image:url(${SHEET[id]});background-size:${FW*4*s}px ${FH*s}px"></div>`}
+
+/* --- предметы и небо --- */
+function buildSprites(){
+  for(const id in LOOK)makeSheet(id);
+  mk('plant',10,14,(R)=>{R(3,10,4,4,'#b5653a');R(3,10,4,1,'#8a4a2a');R(4,5,2,5,'#4f9a4a');R(1,3,3,3,'#6ab85a');R(6,2,3,4,'#6ab85a');R(3,0,3,3,'#7acb68');R(2,6,2,2,'#5aa84f');R(7,6,2,2,'#5aa84f')});
+  mk('coffee',10,14,(R)=>{R(0,0,10,14,'#c25a4a');R(0,0,10,2,'#8a3a30');R(1,3,8,4,'#2b3a4a');R(2,4,3,1,'#7fe0a0');R(2,5,5,1,'#7fe0a0');R(2,8,6,3,'#3a2a2a');R(4,10,2,3,'#fff6e0');R(7,3,1,1,'#ffd24a')});
+  mk('coffeeX',10,14,(R)=>{R(0,0,10,14,'#8a5048');R(0,0,10,2,'#5a2a24');R(1,3,8,4,'#2b1a1a');R(2,4,1,1,'#ff5a4a');R(4,4,1,1,'#ff5a4a');R(3,5,1,1,'#ff5a4a');R(2,6,1,1,'#ff5a4a');R(4,6,1,1,'#ff5a4a');R(2,8,6,3,'#2a1a1a');R(7,1,1,1,'#ffd24a');R(1,1,1,1,'#ffd24a');R(8,5,1,1,'#ffd24a')});
+  mk('printer',12,8,(R)=>{R(0,3,12,5,'#d9d3c8');R(2,0,8,3,'#fff6e0');R(2,5,8,1,'#8a8478');R(9,4,2,1,'#7fd1ff');R(3,1,5,1,'#cfc9be')});
+  mk('sofa',22,10,(R)=>{R(1,0,20,5,'#7aa6c9');R(0,4,22,5,'#8fbadb');R(0,2,3,7,'#6190b3');R(19,2,3,7,'#6190b3');R(3,5,16,1,'#6b9abc');R(2,9,2,1,'#6b4a2a');R(18,9,2,1,'#6b4a2a')});
+  const desk=(name,scr,extra)=>mk(name,18,11,(R)=>{R(0,5,18,2,'#c08a54');R(0,5,18,1,'#d9a46a');R(1,7,2,4,'#8a5a35');R(15,7,2,4,'#8a5a35');R(6,0,7,4,'#2b3a4a');R(7,1,5,2,scr);R(9,4,1,1,'#2b3a4a');extra&&extra(R)});
+  desk('deskDes','#ff9ac0',(R)=>{R(1,3,3,2,'#ffd24a');R(2,2,1,1,'#5b8def')});
+  desk('deskCop','#7fd1ff',(R)=>{R(14,3,3,2,'#fff6e0');R(15,4,1,1,'#7a4a2a')});
+  desk('deskTgt','#9be8c0',(R)=>{R(8,2,1,1,'#d6322e');R(1,3,2,2,'#2b3a4a')});
+  desk('deskAna','#d9b8ff',(R)=>{R(7,2,1,1,'#fff6e0');R(9,1,1,2,'#fff6e0');R(1,3,4,2,'#fff6e0');R(2,4,1,1,'#3dae7a')});
+  mk('board',16,12,(R)=>{R(0,0,16,10,'#fff6e0');R(1,1,14,8,'#fffdf5');R(3,6,2,2,'#e5524d');R(6,4,2,4,'#5b8def');R(9,2,2,6,'#3dae7a');R(12,5,1,3,'#ffd24a');R(7,10,2,2,'#8a5a35')});
+  mk('ring',10,14,(R)=>{R(2,0,6,6,'#fffbe0');R(3,1,4,4,'#ffe27a');R(4,6,2,6,'#6b6b78');R(1,12,8,2,'#3a3a48');R(8,7,2,3,'#222');R(8,7,1,1,'#7fd1ff')});
+  mk('door',14,24,(R)=>{R(0,0,14,24,'#8a5a35');R(2,2,10,20,'#bfe8ff');R(6,2,2,20,'#8a5a35');R(3,3,2,5,'#fff');R(3,9,1,2,'#fff');R(10,12,2,3,'#ffd24a')});
+  mk('doorOpen',14,24,(R)=>{R(0,0,14,24,'#8a5a35');R(2,2,10,20,'#2f2218');R(2,2,4,20,'#bfe8ff');R(2,2,1,20,'#8a5a35');R(5,12,1,3,'#ffd24a');R(8,6,3,1,'#ffe9a8')});
+  mk('vase',5,8,(R)=>{R(1,4,3,4,'#7aa6c9');R(0,0,2,2,'#e5524d');R(2,1,2,2,'#ff9ac0');R(3,0,2,2,'#ffd24a');R(2,3,1,2,'#3f9a5a')});
+  mk('flowerbox',16,7,(R)=>{R(0,4,16,3,'#8a5a35');const cs=['#e5524d','#ff9ac0','#ffd24a','#ffffff','#b58be6'];for(let i=0;i<8;i++){R(1+i*2,1+(i%2),1,3,'#3f9a5a');R(i*2,(i%2),2,2,cs[i%5])}});
+  mk('cat',11,8,(R)=>{R(1,3,7,3,'#e8a15a');R(7,1,3,3,'#e8a15a');R(7,0,1,1,'#e8a15a');R(9,0,1,1,'#e8a15a');R(0,1,1,3,'#e8a15a');R(2,6,1,2,'#e8a15a');R(6,6,1,2,'#e8a15a');R(3,3,1,2,'#b66d2c');R(5,3,1,2,'#b66d2c');R(9,2,1,1,'#2a1f1a')});
+  mk('cloud',14,6,(R)=>{R(2,2,10,4,'#fff');R(4,0,4,3,'#fff');R(8,1,4,2,'#fff');R(0,3,3,3,'#fff');R(12,3,2,3,'#fff')},false);
+  mk('plane',24,9,(R)=>{R(2,3,18,4,'#fff');R(20,4,3,2,'#fff');R(0,0,3,4,'#e5524d');R(8,6,6,3,'#e5524d');R(15,4,1,1,'#5b8def');R(12,4,1,1,'#5b8def');R(9,4,1,1,'#5b8def');R(22,3,1,1,'#e5524d')});
+  mk('balloon',9,13,(R)=>{R(1,0,7,6,'#e5524d');R(0,2,9,3,'#e5524d');R(3,0,3,6,'#fff6e0');R(2,6,5,1,'#e5524d');R(3,7,1,3,'#8a5a35');R(5,7,1,3,'#8a5a35');R(3,10,3,2,'#8a5a35')});
+  mk('blimp',24,10,(R)=>{R(2,1,20,6,'#e8e8f0');R(4,0,16,1,'#e8e8f0');R(4,7,16,1,'#e8e8f0');R(0,2,3,4,'#e5524d');R(10,8,5,2,'#6b6b78');R(8,3,2,2,'#e5524d');R(11,3,2,2,'#e5524d');R(14,3,2,2,'#e5524d')});
+  mk('birds',16,6,(R)=>{R(0,2,1,1,'#4a3320');R(1,1,2,1,'#4a3320');R(3,2,1,1,'#4a3320');R(8,0,1,1,'#4a3320');R(9,0,1,1,'#4a3320');R(10,1,1,1,'#4a3320');R(11,0,1,1,'#4a3320');R(12,0,1,1,'#4a3320')},false);
+  mk('hills',64,14,(R)=>{
+    for(let x=0;x<64;x++){const h=7+Math.round(Math.sin(x/9)*3+Math.sin(x/4.3)*1.5);R(x,14-h-3,1,h+3,'#a6c99a')}
+    for(let x=0;x<64;x++){const h=4+Math.round(Math.sin(x/6+1)*2.2);R(x,14-h,1,h,'#7fae7a')}
+    R(10,6,1,3,'#8a5a35');R(8,3,5,4,'#4f9a4a');R(44,7,1,3,'#8a5a35');R(42,4,5,4,'#4f9a4a');R(27,8,1,2,'#8a5a35');R(26,6,3,3,'#5aa84f');
+  },false);
+  mk('city',64,20,(R)=>{
+    let x=0;while(x<64){const w=4+((x*7)%5),h=8+((x*13)%9);R(x,20-h,w,h,'#a9bddb');x+=w+1}
+    x=2;while(x<64){const w=5+((x*5)%4),h=5+((x*11)%8);R(x,20-h,w,h,'#7e93b8');for(let yy=20-h+1;yy<19;yy+=2)for(let xx=x+1;xx<x+w-1;xx+=2)if(((xx*3+yy*5)%4)===0)R(xx,yy,1,1,'#ffe9a8');x+=w+2}
+  },false);
+  mk('carA',16,8,(R)=>{R(0,3,16,4,'#e5524d');R(3,0,9,4,'#e5524d');R(4,1,3,2,'#bfe8ff');R(8,1,3,2,'#bfe8ff');R(2,6,3,2,'#2a1f1a');R(11,6,3,2,'#2a1f1a');R(14,4,2,1,'#ffe27a')});
+  mk('carB',16,8,(R)=>{R(0,3,16,4,'#5b8def');R(2,0,11,4,'#5b8def');R(3,1,4,2,'#bfe8ff');R(8,1,4,2,'#bfe8ff');R(2,6,3,2,'#2a1f1a');R(11,6,3,2,'#2a1f1a');R(0,4,2,1,'#ffe27a')});
+  mk('lamp',4,22,(R)=>{R(1,3,2,19,'#4a3f3a');R(0,0,4,3,'#ffe27a')});
+  mk('tree',14,18,(R)=>{R(6,10,2,8,'#8a5a35');R(1,2,12,9,'#5aa84f');R(3,0,8,3,'#6ab85a');R(4,4,2,2,'#7acb68')});
+  mk('bench',16,7,(R)=>{R(0,1,16,2,'#b98a5c');R(1,3,2,4,'#6b4a2a');R(13,3,2,4,'#6b4a2a');R(0,4,16,1,'#8a5a35')});
+}
+
+/* =====================  ЗВУК  ===================== */
+let AC=null,MASTER=null,soundOn=true,mTimer=null,mStep=0,stepT=null;
+try{const s=localStorage.getItem('smmSound');if(s==='0')soundOn=false}catch(e){}
+function initAudio(){
+  if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)();MASTER=AC.createGain();MASTER.gain.value=soundOn?1:0;MASTER.connect(AC.destination)}catch(e){return}}
+  if(AC.state==='suspended')AC.resume();
+  if(soundOn&&!mTimer)music();
+}
+function tone(f,d,type='square',vol=.05,delay=0,slideTo=null){
+  if(!AC)return;const t=AC.currentTime+delay,o=AC.createOscillator(),g=AC.createGain();
+  o.type=type;o.frequency.setValueAtTime(f,t);if(slideTo)o.frequency.exponentialRampToValueAtTime(slideTo,t+d);
+  g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);
+  o.connect(g).connect(MASTER);o.start(t);o.stop(t+d+.02);
+}
+function noise(d,vol=.1,delay=0,hp=1200){
+  if(!AC)return;const n=Math.floor(AC.sampleRate*d),b=AC.createBuffer(1,n,AC.sampleRate),a=b.getChannelData(0);
+  for(let i=0;i<n;i++)a[i]=(Math.random()*2-1)*(1-i/n);
+  const s=AC.createBufferSource(),f=AC.createBiquadFilter(),g=AC.createGain();
+  f.type='highpass';f.frequency.value=hp;g.gain.value=vol;s.buffer=b;s.connect(f).connect(g).connect(MASTER);s.start(AC.currentTime+delay);
+}
+/* шумное обсуждение: много «голосов» без слов (как массовка в сериалах) */
+function murmur(dur=2.2,vol=.05,voices=6){
+  if(!AC)return;const t0=AC.currentTime;
+  for(let v=0;v<voices;v++){
+    const o=AC.createOscillator(),g=AC.createGain(),f1=AC.createBiquadFilter(),f2=AC.createBiquadFilter(),mix=AC.createGain();
+    o.type='sawtooth';const base=95+Math.random()*170;o.frequency.setValueAtTime(base,t0);
+    f1.type='bandpass';f1.Q.value=5;f2.type='bandpass';f2.Q.value=7;
+    o.connect(f1);o.connect(f2);f1.connect(mix);f2.connect(mix);mix.connect(g);g.connect(MASTER);
+    g.gain.setValueAtTime(0.0001,t0);
+    let t=t0+Math.random()*.25;
+    while(t<t0+dur){
+      const syl=.08+Math.random()*.18,gap=Math.random()<.25?.15+Math.random()*.3:.02+Math.random()*.06;
+      const a=vol*(.5+Math.random()*.5);
+      g.gain.linearRampToValueAtTime(a,t+.03);
+      g.gain.linearRampToValueAtTime(.0001,t+syl);
+      o.frequency.linearRampToValueAtTime(base*(.9+Math.random()*.3),t+syl);
+      f1.frequency.setValueAtTime(300+Math.random()*500,t);
+      f2.frequency.setValueAtTime(900+Math.random()*1300,t);
+      t+=syl+gap;
+    }
+    g.gain.linearRampToValueAtTime(.0001,t0+dur+.05);
+    o.start(t0);o.stop(t0+dur+.1);
+  }
+  for(let i=0;i<Math.floor(dur*6);i++)noise(.04,.015+Math.random()*.015,Math.random()*dur,3500);
+}
+/* смех из зала: несколько «голосов» с серией «ха-ха-ха» */
+function laugh(vol=.05){
+  if(!AC)return;const t0=AC.currentTime;
+  for(let v=0;v<7;v++){
+    const base=170+Math.random()*230,n=5+Math.floor(Math.random()*4);
+    let t=t0+Math.random()*.3;
+    for(let i=0;i<n;i++){
+      const o=AC.createOscillator(),g=AC.createGain(),f=AC.createBiquadFilter();
+      o.type='sawtooth';o.frequency.setValueAtTime(base*(1.15-i*.03),t);o.frequency.linearRampToValueAtTime(base*(.95-i*.03),t+.12);
+      f.type='bandpass';f.frequency.value=800+Math.random()*600;f.Q.value=3;
+      g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(vol*(1-i/(n+2)),t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.14);
+      o.connect(f).connect(g).connect(MASTER);o.start(t);o.stop(t+.16);
+      t+=.15+Math.random()*.05;
+    }
+  }
+  noise(1.3,.012,0,2500);
+}
+const sfx={
+  step(){tone(120+Math.random()*40,.05,'square',.035,0,70)},
+  slap(){noise(.09,.35,0,900);tone(150,.14,'sine',.3,0,50)},
+  ding(){tone(988,.25,'sine',.08);tone(1319,.35,'sine',.07,.12)},
+  bell(){tone(1568,.5,'sine',.08);tone(1175,.7,'sine',.08,.22)},
+  praise(){[659,784,988,1319].forEach((f,i)=>tone(f,.12,'triangle',.07,i*.07))},
+  win(){[523,659,784,1047,1319].forEach((f,i)=>tone(f,.14,'square',.06,i*.09));noise(.4,.08,.35,4000);noise(.3,.06,.55,5000)},
+  lose(){[392,370,349,294].forEach((f,i)=>tone(f,.22,'sawtooth',.05,i*.17))},
+  pop(){tone(660,.08,'square',.05);tone(880,.08,'square',.05,.07)},
+  crash(){noise(.25,.25,0,300);tone(90,.3,'sawtooth',.12,0,40)},
+  tink(){tone(1700,.05,'square',.05);tone(2300,.04,'square',.04,.06)},
+  murmur,laugh
+};
+const NOTES=[262,294,330,392,440,523];
+const MEL=[0,2,4,2,3,1,2,0,0,2,4,5,4,2,3,1];
+function music(){
+  if(!soundOn||!AC){mTimer=null;return}
+  const n=MEL[mStep%MEL.length];
+  tone(NOTES[n],.3,'triangle',.045);
+  if(mStep%4===0)tone(NOTES[n]/2,.55,'sine',.05);
+  mStep++;mTimer=setTimeout(music,340);
+}
+function startSteps(){if(stepT)return;sfx.step();stepT=setInterval(()=>sfx.step(),260)}
+function stopSteps(){clearInterval(stepT);stepT=null}
+document.addEventListener('pointerdown',initAudio);
+$('#hSnd').onclick=()=>{
+  soundOn=!soundOn;try{localStorage.setItem('smmSound',soundOn?1:0)}catch(_){}
+  $('#hSnd').textContent=soundOn?'🔊':'🔇';
+  if(MASTER)MASTER.gain.value=soundOn?1:0;
+  if(soundOn){initAudio();if(!mTimer)music()}else{clearTimeout(mTimer);mTimer=null}
+};
+$('#hSnd').textContent=soundOn?'🔊':'🔇';
+
+/* =====================  ДАННЫЕ  ===================== */
+const BRIEFS=[
+ {t:'Запуск кофейни «Зерно»',who:'Марина, клиент',txt:'Мы открываемся в районе. Нужны первые гости, но денег мало. Каждый рубль должен работать.',aud:'Местная аудитория 18–35 лет рядом с кофейней.',fit:'micro',check:450,wb:48000,
+  kpi:{m:'cpa',op:'<=',v:400,label:'CPA ≤ 400 ₽'},learn:'CPA — цена одного клиента. Её определяют CPM (цена показов), CTR (кликабельность) и конверсия.'},
+ {t:'Акция выходного дня',who:'Марина, клиент',txt:'Делаем акцию «второй кофе в подарок». Хочу видеть, что деньги возвращаются.',aud:'Те, кто уже слышал о нас, и их друзья.',fit:'any',check:500,wb:48000,
+  kpi:{m:'roas',op:'>=',v:1.6,label:'ROAS ≥ 1,6'},learn:'ROAS — сколько выручки приносит рубль рекламы. Он важнее лайков, потому что связан с деньгами.'},
+ {t:'Репутационная неделя',who:'Марина, клиент',txt:'После вчерашней истории с отзывом важно вернуть тёплое отношение. Нужны живые реакции, а не просто охват.',aud:'Постоянные гости и соседи.',fit:'micro',check:450,wb:48000,
+  kpi:{m:'er',op:'>=',v:3,label:'ER ≥ 3 %'},learn:'ER — доля людей, которые отреагировали. Крупный охват с холодной аудиторией часто даёт низкий ER.'},
+ {t:'Коллаборация на весь город',who:'Марина, клиент',txt:'Мы открываем вторую точку и хотим, чтобы о нас узнал весь город. Охват — главная цель.',aud:'Широкая городская аудитория.',fit:'macro',check:500,wb:53000,
+  kpi:{m:'reach',op:'>=',v:300000,label:'Охват ≥ 300 тыс.'},learn:'Когда цель — узнаваемость, считаем охват и CPM. Макро-блогеры дешевле по охвату, но слабее по вовлечению.'},
+ {t:'Трендовая неделя',who:'Марина, клиент',txt:'Все делают ролики под новый звук. Хочу, чтобы мы попали в ленты, но чтобы это было про нас.',aud:'Короткие видео, молодая аудитория.',fit:'any',check:480,wb:53000,
+  kpi:{m:'ctr',op:'>=',v:2.0,label:'CTR ≥ 2,0 %'},learn:'Тренд работает, пока он вписан в бренд. CTR показывает, цепляет ли креатив с первых секунд.'},
+ {t:'Квартальный отчёт',who:'Марина, клиент',txt:'Бюджет придётся урезать. Покажи, что вся наша работа имела смысл. ROAS — главный аргумент.',aud:'Все сегменты. Нужны эффективность и стабильность.',fit:'any',check:520,wb:40000,
+  kpi:{m:'roas',op:'>=',v:1.7,label:'ROAS ≥ 1,7'},learn:'Финал: сильный отдел — это связка людей, метрик и решений. Одна метрика не рассказывает всей истории.'}
+];
+const EVENTS={
+ 3:{t:'Скандал в комментариях',txt:'Под постом гневный отзыв «кофе холодный». Его лайкают люди, и он поднимается наверх.',opts:[
+  {l:'Удалить комментарий',d:'Быстро, но люди заметят. Риск «эффекта Стрейзанд».',fx:g=>{g.trust-=8;return 'Люди заметили удаление и сделали скриншоты. Доверие −8.'}},
+  {l:'Ответить публично и извиниться',d:'−2 000 ₽ на подарочные кофе.',fx:g=>{g.wbPenalty+=2000;g.trust+=6;return 'Ответ вызвал тёплую реакцию. Доверие +6, бюджет недели −2 000 ₽.'}},
+  {l:'Проигнорировать',d:'50 % — само рассосётся.',fx:g=>{if(Math.random()<.5){g.trust-=10;return 'Тема разрослась. Доверие −10.'}return 'Повезло, всё затихло.'}}]},
+ 5:{t:'Вирусный тренд',txt:'Новый звук набирает миллионы. Команда загорелась, но у бренда свой тон.',opts:[
+  {l:'Прыгнуть сразу',d:'Быстро, но может не попасть в бренд.',fx:g=>{g.carry.content+=8;g.mood=-10;return 'Быстро сделали. Креатив +8, но команда устала (−10 настроения).'}},
+  {l:'Адаптировать под бренд',d:'Потеряем 1 действие на этой неделе.',fx:g=>{g.carry.content+=20;g.apPenalty=1;return 'Идея сильная и своя. Креатив +20, −1 действие.'}},
+  {l:'Пропустить',d:'Без риска, без роста.',fx:g=>'Решили не гнаться. Ничего не изменилось.'}]}
+};
+const HIRE={tgt:{n:'Таргетолог'},ana:{n:'Аналитик'}};
+const LINES={
+ cop:['Кофе — моя KPI ☕','Дедлайн был вчера','Это не баг, это хук!','Ещё чашечку и гений'],
+ des:['Логотип больше!','Шрифтов много не бывает','Я не волшебник, я Figma','Это не баг, это стиль'],
+ tgt:['CPM плачет 😭','Тестируем всё!','Пиксель, где ты?','Аудитория — это я'],
+ ana:['Корреляция ≠ причина','Покажу график 📈','А где UTM-метки?','Данные не врут'],
+ boss:['А можно вирусно?','Бюджет не резиновый','Хочу как у конкурентов','Нам нужен тренд!'],
+ cl1:['Диван у вас — огонь','А скидка будет?','Когда будут лиды?'],
+ cl2:['Вид отсюда — бомба','Мне бы побольше охват','Кофе есть?']
+};
+const CHAT_LINES=['☕ …и тут он такой…','☕ ха-ха, серьёзно?','☕ ну а потом…','☕ ты не поверишь…'];
+const PRAISE_REPLY=['Спасибо, босс! 🥹','Ого, приятно!','Теперь горы сверну!','Я стараюсь!'];
+const CLIENT_CHAT=['Мне нравится, как идёт работа. Но можно вирусно?','Присылайте отчёты почаще!','У вас тут уютно. Диван — супер.','Главное — чтобы лиды были. Остальное детали.'];
+
+/* ---- сотрудники: уровни, черты, генерация кандидатов ---- */
+const LV={junior:{t:'Junior',sal:2500,skill:.85,stars:1},middle:{t:'Middle',sal:4000,skill:1,stars:2},senior:{t:'Senior',sal:6000,skill:1.25,stars:3}};
+const TRAITS={
+ workaholic:{n:'Трудоголик',d:'действия отнимают меньше настроения'},
+ chatty:{n:'Болтун',d:'чаще ходит за кофе и любит поболтать'},
+ coffee:{n:'Кофеман',d:'кофе даёт ему +12 к настроению вместо +8'},
+ soul:{n:'Душа компании',d:'раз в неделю даёт всем +3 к настроению'},
+ perfect:{n:'Перфекционист',d:'результат ×1,1, но устаёт сильнее'}
+};
+const FN=['Аня','Катя','Вика','Даша','Маша','Оля','Ира','Лиза','Юля','Настя'];
+const MN=['Артём','Илья','Денис','Кирилл','Егор','Паша','Тим','Рома','Лёша','Глеб'];
+const SKINS=['#ffdcc2','#f2c9a0','#e6b98f','#c99a72','#a8764f'];
+const HAIRC=['#2a1f1a','#5b3a29','#8a5a35','#d9487a','#6b3fa0','#f2c14e','#222','#b84a2a'];
+const SHIRTS=['#e5524d','#5b8def','#3dae7a','#e8a15a','#b58be6','#58c4a0','#f08fa6','#7a8aa0'];
+const PANTS=['#3b3f55','#4a4a55','#2f3b4f','#5b4a8a','#6b4a2a'];
+const QUIPS={
+ tgt:['Вёл рекламу кофеен, пекарен и одного кота','Знаю, что такое CPM, и могу объяснить маме','Слил бюджет только дважды. Больше не повторится'],
+ ana:['Люблю графики больше, чем людей','Нашёл корреляцию между кофе и дедлайнами','В Excel — как рыба в воде'],
+ des:['Сделаю логотип больше, меньше и как было','Figma — мой второй дом','Шрифтов много не бывает'],
+ cop:['Пишу хуки быстрее, чем остывает кофе','Заголовки — моя страсть','Могу написать пост даже про скрепки']
+};
+const QA=[
+ ['Ваша главная слабость?',['Слишком люблю дедлайны. Особенно когда они уже прошли.','Не умею отказывать клиентам. Вообще никому.','Иногда работаю слишком хорошо. Простите.','Не могу пройти мимо кофемашины.']],
+ ['Почему ушли с прошлой работы?',['Там не было кофемашины.','Начальник просил логотип больше. И меньше.','Они не оценили мои мемы.','Я не ушёл, я эволюционировал.']],
+ ['Что знаете про наш бренд?',['Что у вас красная кепка и харизма.','Читал ваши кейсы. Ну, заголовки.','Всё! Про ROAS особенно.','Вы — те, у кого пиксельный офис, да?']]
+];
+function randLook(f,role){
+  const hair=f?rpick(['long','long','bun','pony','short']):rpick(['short','messy','messy','short']);
+  const acc=[];
+  if(role==='tgt')acc.push(rpick(['headset','target','headset']));
+  else if(role==='ana')acc.push(rpick(['glasses','chart','glasses']));
+  else if(role==='des')acc.push(rpick(['beret','pencil','splat']));
+  else acc.push(rpick(['mug','pencil','mug']));
+  if(Math.random()<.3)acc.push(f?'earring':'cap');
+  if(acc.includes('cap')&&(acc.includes('headset')||acc.includes('beret')))acc.splice(acc.indexOf('cap'),1);
+  return {skin:rpick(SKINS),hair,hc:rpick(HAIRC),shirt:rpick(SHIRTS),pants:rpick(PANTS),shoe:rpick(['#fff6e0','#7a5a3a','#3a3a3a']),eyes:Math.random()<.2?'tired':'happy',mouth:rpick(['smile','smirk','tongue','smile','meh']),acc};
+}
+function genCandidate(role){
+  const f=Math.random()<.5,name=rpick(f?FN:MN);
+  const r=Math.random(),level=r<.4?'junior':r<.8?'middle':'senior';
+  const liar=level!=='senior'&&Math.random()<.3;
+  const claim=liar?(level==='junior'?'middle':'senior'):level;
+  const salary=Math.round((LV[level].sal+(Math.random()*600-300))/100)*100;
+  const years=level==='junior'?rpick([0,1]):level==='middle'?rpick([2,3,4]):rpick([5,6,8,9]);
+  return {name,gender:f?'f':'m',role,level,claim,liar,salary,years,age:21+Math.floor(Math.random()*17),trait:rpick(Object.keys(TRAITS)),
+          look:randLook(f,role),quip:rpick(QUIPS[role]),qa:shuffle(QA).slice(0,2).map(q=>[q[0],rpick(q[1])])};
+}
+
+/* ---- клиенты-посетители ---- */
+const VTYPES=[
+ {id:'baker',name:'Игорь',short:'пекарня',title:'Пекарня «Хлеб&Соль»',pref:'cases',intro:'Хочу, чтобы про мои булочки знал весь район!',look:{skin:'#f2c9a0',hair:'short',hc:'#5a3a2a',shirt:'#fff6e0',pants:'#4a4a55',shoe:'#6b4a2a',eyes:'happy',mouth:'smile',acc:['chef','apron']}},
+ {id:'barber',name:'Борис',short:'барбершоп',title:'Барбершоп «Усы»',pref:'discount',intro:'Мне нужны клиенты. Желательно с бородой.',look:{skin:'#e6b98f',hair:'short',hc:'#2a1f1a',shirt:'#3a3f55',pants:'#222',shoe:'#222',eyes:'happy',mouth:'smirk',acc:['mustache']}},
+ {id:'startup',name:'Лёва',short:'стартап',title:'Стартап «Лунтик.ai»',pref:'brief',intro:'У нас нейросеть для всего. Нужен хайп!',look:{skin:'#ffd9b5',hair:'messy',hc:'#b84a2a',shirt:'#8a8aa0',pants:'#3a3f55',shoe:'#fff6e0',eyes:'happy',mouth:'tongue',acc:['glasses','hoodie']}},
+ {id:'florist',name:'Света',short:'цветы',title:'Студия «Ирис»',pref:'cases',intro:'Ищу, кто сделает мои цветы вирусными.',look:{skin:'#ffd5b8',hair:'pony',hc:'#8a5a35',shirt:'#7bc46b',pants:'#6b4a2a',shoe:'#fff6e0',eyes:'happy',mouth:'smile',acc:['earring','apron']}},
+ {id:'auto',name:'Эдик',short:'автосалон',title:'Автосалон «Вираж»',pref:'discount',intro:'Продаю машины. Нужен охват. И скидку.',look:{skin:'#e6b98f',hair:'short',hc:'#888',shirt:'#2b2f45',pants:'#2b2f45',shoe:'#111',eyes:'happy',mouth:'smirk',acc:['briefcase','lapel']}}
+];
+
+/* ---- «соседние агентства» (пока имитация других игроков) ---- */
+const RIVALS=[
+ {id:'r1',name:'Агентство «Пиксель PR»',owner:'Дима',league:'Серебро',trust:62,perm:.75,staff:[]},
+ {id:'r2',name:'Студия «Нора»',owner:'Катя',league:'Золото',trust:78,perm:.5,staff:[]},
+ {id:'r3',name:'«Хайп & Ко»',owner:'Рома',league:'Бронза',trust:41,perm:.85,staff:[]}
+];
+function initRivals(){
+  RIVALS.forEach((r,ri)=>{
+    const roles=shuffle(['des','cop','tgt','ana']).slice(0,3);
+    r.staff=roles.map((role,j)=>{
+      const c=genCandidate(role);c.mood=40+Math.floor(Math.random()*55);c.loyalty=.2+Math.random()*.6;c.claim=c.level;c.key=`r${ri}_${j}`;
+      LOOK[c.key]=c.look;makeSheet(c.key);return c;
+    });
+  });
+}
+const ROLE_N={des:'Дизайнер',cop:'Копирайтер',tgt:'Таргетолог',ana:'Аналитик'};
+
+/* =====================  СОСТОЯНИЕ  ===================== */
+let S,W,LOCK=false,pending=null;
+function fresh(){
+  S={week:0,trust:50,hired:{des:1,cop:1,tgt:0,ana:0},mood:{des:80,cop:80,tgt:80,ana:80},creator:'micro',share:60,hist:[],pos:{L:0,x:9},carL:2,carOpen:false,
+     coffee:{0:{ok:true,tech:false},1:{ok:true,tech:false}},out:false,opos:{x:DOOR_X},
+     carry:{content:0},clientList:[{tid:'main',name:'Марина',short:'кофейня',title:'Кофейня «Зерно»',fee:0}],
+     bonus:0,sent:0,wbPenalty:0,apPenalty:0,wb:40000,kpiHit:0,totalConv:0,totalSpend:0,totalRev:0,chat:{des:0,cop:0,tgt:0,ana:0},
+     staff:{des:{name:'Соня',gender:'f',level:'middle',skill:1,salary:4000,trait:'chatty'},cop:{name:'Макс',gender:'m',level:'middle',skill:1,salary:4000,trait:'coffee'},tgt:null,ana:null},
+     gifts:{},pendingGift:[],pool:{}};
+}
+function payroll(){return ['des','cop','tgt','ana'].reduce((s,k)=>s+(S.hired[k]&&S.staff[k]?S.staff[k].salary:0),0)}
+function clientFees(){return S.clientList.slice(1).reduce((s,c)=>s+c.fee,0)}
+function newWeek(){
+  S.week++;
+  const b=BRIEFS[S.week-1];
+  const bonus=Math.round((S.trust-50)*160);
+  S.wb=Math.max(MIN_AD,b.wb+bonus-S.wbPenalty+clientFees()+S.bonus-payroll());S.bonus=0;
+  S.gifts={};S.pendingGift=[];
+  W={content:S.carry.content,target:0,insight:false,acts:{des:0,cop:0,tgt:0,ana:0},ap:4-S.apPenalty,used:{},coffeeBought:0,praised:{},lowMood:{},visits:0,flowers:0};
+  S.carry={content:0};S.wbPenalty=0;S.apPenalty=0;
+  dismissHQ();resetStaff();hud();render();
+}
+
+/* =====================  ПЕРСОНАЖИ  ===================== */
+const PEOPLE={
+ des:{n:'Соня',role:'Дизайнер',acts:[
+   {id:'visual',l:'Сделать визуал под бриф',d:'Креатив +14',fx:(p)=>{W.content+=14*p}},
+   {id:'ab',l:'Тест двух обложек',d:'Креатив +9 и подсказка по CTR',fx:(p)=>{W.content+=9*p;W.ab=true}}]},
+ cop:{n:'Макс',role:'Копирайтер',acts:[
+   {id:'hook',l:'Написать цепляющий хук',d:'Креатив +14',fx:(p)=>{W.content+=14*p}},
+   {id:'plan',l:'Расписать контент-план',d:'Креатив +9, ровнее воронка',fx:(p)=>{W.content+=9*p;W.plan=true}}]},
+ tgt:{n:'Таргетолог',role:'Таргетолог',acts:[
+   {id:'narrow',l:'Настроить аудиторию',d:'Таргет +16',fx:(p)=>{W.target+=16*p}},
+   {id:'pixel',l:'Поставить пиксель и события',d:'Таргет +10 и чище данные',fx:(p)=>{W.target+=10*p;W.clean=true}}]},
+ ana:{n:'Аналитик',role:'Аналитик',acts:[
+   {id:'insight',l:'Изучить аудиторию',d:'Таргет +8 и подсказка, на кого ставить',fx:(p)=>{W.target+=8*p;W.insight=true}}]}
+};
+const emo=id=>{const s=S.staff[id];return s&&s.gender==='f'?'👩':'🧑'};
+const moodIcon=m=>m>=80?'😄':m>=60?'😊':m>=40?'😐':m>=20?'😫':'😡';
+const moodF=id=>{const m=S.mood[id];return m>=80?1.1:m>=40?1:m>=20?.8:.6};
+const effOf=id=>{const s=S.staff[id];return s.skill*moodF(id)*(s.trait==='perfect'?1.1:1)};
+const STATIONS=[
+ {id:'boss',L:2,x:15,stand:6,sp:'sofa',client:0},
+ {id:'cl1',L:2,x:38,stand:29,sp:'sofa',client:1},
+ {id:'cl2',L:2,x:61,stand:52,sp:'sofa',client:2},
+ {id:'board',L:2,x:80,stand:80,sp:'board',tag:'Доска брифа'},
+ {id:'tgt',L:1,x:25,stand:15,sp:'deskTgt'},
+ {id:'ana',L:1,x:58,stand:48,sp:'deskAna'},
+ {id:'des',L:0,x:30,stand:21,sp:'deskDes'},
+ {id:'cop',L:0,x:52,stand:43,sp:'deskCop'},
+ {id:'cr',L:0,x:85,stand:79,sp:'ring',tag:'Блогеры'}
+];
+STATIONS.forEach(s=>s.cx=s.x);
+const MACHINE={0:{x:68},1:{x:82}};
+const COFFEE_SPOTS={0:[61,75],1:[75,67]};
+const PAIRS=[['des','cop',0],['tgt','ana',1]];
+
+/* =====================  СЦЕНА  ===================== */
+function winHTML(x,kind,txt){
+  let v='';
+  if(kind==='plane')v=`<div class="veh plane"><div class="ban">${txt}</div>${sp('plane',2)}</div>`;
+  if(kind==='blimp')v=`<div class="veh blimp">${sp('blimp',2)}</div>`;
+  if(kind==='balloon')v=`<div class="veh balloon">${sp('balloon',2)}</div>`;
+  if(kind==='birds')v=`<div class="veh birds">${sp('birds',2)}</div>`;
+  return `<div class="win" style="left:${x}%"><i class="sun"></i><div class="cl" style="top:12%">${sp('cloud',2)}</div><div class="cl" style="top:40%;animation-delay:-18s">${sp('cloud',2)}</div><div class="hl" style="background-image:url(${spUrl('hills')})"></div>${v}</div>`;
+}
+function panoHTML(){
+  return `<div class="win pano"><i class="sun" style="right:7%;top:12%;width:18px;height:18px"></i>
+  <div class="cl" style="top:6%">${sp('cloud',3)}</div><div class="cl" style="top:34%;animation-delay:-14s">${sp('cloud',2)}</div><div class="cl" style="top:16%;animation-delay:-28s">${sp('cloud',3)}</div>
+  <div class="hl" style="height:52%;background-image:url(${spUrl('city')})"></div>
+  <div class="veh plane" style="top:10%"><div class="ban">СКИДКА −50%</div>${sp('plane',3)}</div>
+  <div class="veh blimp" style="top:34%;animation-duration:30s">${sp('blimp',2)}</div>
+  <div class="veh balloon" style="left:62%;top:14%">${sp('balloon',3)}</div></div>`;
+}
+const SCENE=[
+ {c:'f2',n:'3 · КЛИЕНТЫ',pano:1,poster:[],clock:74,fl:[[4,'plant']]},
+ {c:'f1',n:'2 · МЕДИА-ОТДЕЛ',w:[[3,'blimp'],[57,'plane','ЛАЙК ПЛИЗ']],poster:[[40,'A/B ТЕСТ<br>ВСЕГДА']],clock:51,fl:[[5,'plant'],[42,'printer'],[82,'coffee']]},
+ {c:'f0',n:'1 · КРЕАТИВ-СТУДИЯ',w:[[16,'birds'],[57,'balloon']],poster:[[47,'Comic Sans<br>НЕТ!']],clock:null,fl:[[40,'plant'],[68,'coffee']],cat:1,door:1}
+];
+const LF={f2:2,f1:1,f0:0};
+function buildScene(){
+  const b=$('#bld');
+  b.innerHTML='<div class="floors">'+SCENE.map(f=>`<div class="floor ${f.c}"><span class="fl">${f.n}</span>${f.pano?panoHTML():f.w.map(w=>winHTML(w[0],w[1],w[2])).join('')}${f.poster.map(p=>`<div class="poster" style="left:${p[0]}%">${p[1]}</div>`).join('')}${f.clock?`<div class="clock" style="left:${f.clock}%"></div>`:''}${f.fl.map(d=>d[1]==='coffee'?`<div class="deco cof" data-cof="${LF[f.c]}" style="left:${d[0]}%"></div>`:`<div class="deco" style="left:${d[0]}%">${sp(d[1],3)}</div>`).join('')}${f.cat?`<div class="cat">${sp('cat',3)}</div>`:''}${f.door?`<div class="mat"></div><div class="door" id="doorEl"><div class="exit">ВХОД</div>${sp('door',3)}</div>`:''}</div>`).join('')+'</div>'+
+  `<div class="shaft">${[2,1,0].map(L=>`<div class="ind" data-L="${L}" style="top:calc(${(2-L)*FLOOR_H}% + 5px)">${L+1}</div>`).join('')}</div>
+   <div class="car-e" id="car" style="bottom:${S.carL*FLOOR_H}%"><div class="dl"></div><div class="dr"></div></div>`;
+  $('#doorEl').onclick=()=>doorTap();
+  document.querySelectorAll('.deco.cof').forEach(e=>{e.onclick=()=>machineTap(+e.dataset.cof)});
+  refreshCoffee();
+  setInd();
+}
+function setInd(){document.querySelectorAll('.ind').forEach(e=>e.classList.toggle('on',+e.dataset.l===S.carL))}
+function pos(L,x){return {bottom:`calc(${L*FLOOR_H}% + ${GROUND}px)`,left:x+'%'}}
+function render(){
+  const b=$('#bld');
+  b.querySelectorAll('.st,.dk-el,.player').forEach(n=>n.remove());
+  for(const st of STATIONS){
+    const p=PEOPLE[st.id],isC=st.client!==undefined,isP=!!p||isC;
+    const client=isC?S.clientList[st.client]:null;
+    if(isP){
+      const dk=document.createElement('div');dk.className='dk-el';
+      dk.style.left=st.x+'%';dk.style.bottom=`calc(${st.L*FLOOR_H}% + ${GROUND}px)`;
+      dk.innerHTML=sp(st.sp,3)+(p&&S.gifts[st.id]?`<div class="vase">${sp('vase',3)}</div>`:'');
+      b.appendChild(dk);
+    }
+    if(isC&&(!client||client.seated===false))continue;
+    const d=document.createElement('div');d.className='st';d.dataset.id=st.id;
+    d.style.left=st.cx+'%';d.style.bottom=`calc(${st.L*FLOOR_H}% + ${GROUND}px)`;
+    let inner='';
+    if(isP){
+      if(isC||S.hired[st.id]){
+        const tag=isC?`${client.name} · ${client.short}`:`${p.n} · ${p.role}`;
+        inner+=`<div class="tag">${tag}</div><div class="pc">${charEl(st.id)}</div>${p?`<span class="mood">${moodIcon(S.mood[st.id])}</span>`:''}`;
+        d.dataset.can='1';
+        if(atDesk(st.id))d.classList.add('atdesk');
+        if(p&&S.mood[st.id]<40)d.classList.add('sad');
+      }else inner+=`<div class="ghost" style="margin-bottom:43px">➕ Нанять<br>${HIRE[st.id].n}</div>`;
+    }else inner+=`<div class="tag">${st.tag}</div><div class="dk">${sp(st.sp,3)}</div>`;
+    d.innerHTML=inner;
+    d.onclick=()=>stationTap(st);
+    b.appendChild(d);
+    if(p&&S.chat[st.id]){d.dataset.chat='1';say(d,CHAT_LINES[0],true)}
+  }
+  const pe=document.createElement('div');pe.className='player';pe.id='pl';
+  pe.innerHTML=`<div class="you">ТЫ</div>${charEl('me')}`;
+  const q=pos(S.pos.L,S.pos.x);pe.style.bottom=q.bottom;pe.style.left=q.left;
+  if(S.out)pe.style.visibility='hidden';
+  b.appendChild(pe);
+  updateOutside();
+}
+function hud(){
+  $('#hWeek').textContent=`📅 ${S.week}/${BRIEFS.length} · 👥${S.clientList.length}`;
+  $('#hBudget').textContent=`💰 ${fmt(S.wb)} ₽`;
+  $('#hTrust').style.width=clamp(S.trust,0,100)+'%';
+  $('#hAp').innerHTML=`⚡ <b>${W?W.ap:0}</b>`;
+}
+
+/* ---------- вид «Улица» ---------- */
+function buildOutside(){
+  const o=$('#outside');
+  const clouds=[[8,0],[40,-20],[70,-40]].map((c,i)=>`<div class="ocloud" style="top:${c[0]}%;animation-delay:${c[1]}s;animation-duration:${55+i*14}s">${sp('cloud',4)}</div>`).join('');
+  const mini=id=>`<div class="spr w" style="--w:38px;width:38px;height:54px;background-image:url(${SHEET[id]});background-size:152px 54px"></div>`;
+  o.innerHTML=`<div class="osun"></div>${clouds}
+  <div class="oplane"><div class="ban">ПРИХОДИТЕ В SMM-OFFICE!</div>${sp('plane',3)}</div>
+  <div class="ohills" style="background-image:url(${spUrl('hills')})"></div>
+  <div class="ocafe" id="cafe" onclick="cafeTap()">
+    <div class="ocsign">КОФЕ<br>«ЗЕРНО»</div>
+    <div class="ocwin"><div class="spr" style="--w:38px;width:38px;height:54px;background-image:url(${SHEET.barista});background-size:152px 54px"></div></div>
+    <div class="ocawn"></div>
+    <div class="ocdoor">${sp('door',2)}</div>
+    <div class="ochint">☕ +1⚡</div>
+  </div>
+  <div class="ofl" id="flshop" onclick="flowerTap()">
+    <div class="ocsign">ЦВЕТЫ<br>«РОМАШКА»</div>
+    <div class="ocwin"><div class="spr" style="--w:38px;width:38px;height:54px;background-image:url(${SHEET.florist});background-size:152px 54px"></div></div>
+    <div class="ocawn"></div>
+    <div class="ocdoor">${sp('door',2)}</div>
+    <div class="ofbox">${sp('flowerbox',2)}</div>
+    <div class="ochint">💐 +😊</div>
+  </div>
+  <div class="obuild" id="obuild" onclick="enterBuilding()">
+    <div class="scaf">🏗 Уровень 2 — скоро</div>
+    <div class="osign">SMM-OFFICE · Ур.1</div>
+    <div class="ofloor f2"><div class="ow" id="ow2a"></div><div class="ow" id="ow2b"></div></div>
+    <div class="ofloor f1"><div class="ow" id="ow1a"></div><div class="ow" id="ow1b"></div></div>
+    <div class="ofloor f0"><div class="ow" id="ow0a"></div><div class="od"><div class="awn"></div>${sp('door',3)}</div><div class="ow" id="ow0b"></div></div>
+  </div>
+  <div class="ogr"><div class="sidewalk">
+    <div style="position:absolute;left:27%;bottom:4px">${sp('tree',3)}</div>
+    <div style="position:absolute;left:75%;bottom:4px">${sp('tree',3)}</div>
+    <div style="position:absolute;left:35%;bottom:6px">${sp('lamp',3)}</div>
+    <div style="position:absolute;left:60%;bottom:6px">${sp('bench',3)}</div>
+    <div class="ped" style="bottom:4px;animation-duration:22s">${mini('p1')}</div>
+    <div class="ped" style="bottom:2px;animation-duration:32s;animation-delay:-12s">${mini('p2')}</div>
+    <div class="ped" style="bottom:3px;animation-duration:40s;animation-delay:-28s">${mini('p3')}</div>
+    <div class="opl" id="oplayer" style="display:none;left:${DOOR_X}%">${charEl('me',2)}</div>
+  </div><div class="road">
+    <div class="car" style="top:16%;animation-duration:8s">${sp('carA',3)}</div>
+    <div class="car l" style="top:52%;animation-duration:11s;animation-delay:-4s">${sp('carB',3)}</div>
+  </div></div>
+  <div class="ohint">Кофейня — энергия, цветы — настроение девушкам</div>`;
+}
+function updateOutside(){
+  const mini=(id)=>`<div class="spr" style="--w:38px;width:38px;height:54px;background-image:url(${SHEET[id]});background-size:152px 54px"></div>`;
+  const set=(sel,id,on)=>{const e=$(sel);if(!e)return;e.className='ow'+(on?' lit':'');e.innerHTML=on?mini(id):''};
+  set('#ow2a','boss',1);set('#ow2b','cl1',!!(S.clientList[1]&&S.clientList[1].seated!==false));
+  set('#ow1a','tgt',S.hired.tgt);set('#ow1b','ana',S.hired.ana);
+  set('#ow0a','des',1);set('#ow0b','cop',1);
+}
+function showView(v){
+  $('#inside').classList.toggle('on',v==='in');$('#outside').classList.toggle('on',v==='out');
+  $('#tIn').classList.toggle('on',v==='in');$('#tOut').classList.toggle('on',v==='out');
+  if(v==='out')updateOutside();
+}
+$('#tIn').onclick=()=>{if(S.out)enterBuilding(true);else showView('in')};
+$('#tOut').onclick=()=>showView('out');
+$('#tGuest').onclick=()=>{if(!LOCK&&!isOpen())guestsSheet()};
+
+/* =====================  ХОДЬБА И ЛИФТ  ===================== */
+const pl=()=>$('#pl');
+const op=()=>$('#oplayer');
+async function walkEl(el,obj,x,steps,spd=.014){
+  const dx=x-obj.x;if(!el||Math.abs(dx)<.5)return;
+  el.classList.toggle('flip',dx<0);el.classList.add('walk');if(steps)startSteps();
+  const dur=Math.max(.25,Math.abs(dx)*spd);
+  el.style.transition=`left ${dur}s linear, bottom .85s steps(14), opacity .4s`;
+  el.style.left=x+'%';obj.x=x;
+  await wait(dur*1000+30);el.classList.remove('walk');if(steps)stopSteps();
+}
+const walkX=x=>walkEl(pl(),S.pos,x,true);
+async function doors(open){const c=$('#car');c.classList.toggle('open',open);S.carOpen=open;await wait(420)}
+let carQ=Promise.resolve();
+function withCar(fn){const p=carQ.then(fn);carQ=p.catch(()=>{});return p}
+function carTrip(el,fromL,toL){
+  return withCar(async()=>{
+    const car=$('#car');
+    if(S.carL!==fromL){
+      if(S.carOpen)await doors(false);
+      car.style.bottom=`${fromL*FLOOR_H}%`;await wait(900);S.carL=fromL;setInd();sfx.ding();
+    }
+    if(!S.carOpen)await doors(true);
+    await wait(150);await doors(false);
+    el.style.visibility='hidden';
+    car.style.bottom=`${toL*FLOOR_H}%`;
+    el.style.bottom=`calc(${toL*FLOOR_H}% + ${GROUND}px)`;
+    await wait(900);S.carL=toL;setInd();sfx.ding();
+    el.style.visibility='';
+    await doors(true);
+  });
+}
+async function ride(toL){await walkX(ELEV);await carTrip(pl(),S.pos.L,toL);S.pos.L=toL}
+async function goTo(L,x){
+  LOCK=true;
+  if(S.pos.L!==L)await ride(L);
+  await walkX(x);pl().classList.remove('flip');LOCK=false;
+}
+async function stationTap(st){
+  if(LOCK||isOpen())return;
+  const chat=S.chat[st.id];
+  const sx=chat?st.cx-9:st.cx+(st.stand-st.x);
+  await goTo(st.L,clamp(sx,6,84));
+  if(chat)return callToWork(st.id);
+  openStation(st);
+}
+async function machineTap(L){
+  if(LOCK||isOpen())return;
+  await goTo(L,MACHINE[L].x-9);
+  coffeeSheet(L);
+}
+function doorFx(ms){
+  const d=document.querySelector('#doorEl .sp');if(!d)return;
+  d.style.backgroundImage=`url(${spUrl('doorOpen')})`;
+  setTimeout(()=>{d.style.backgroundImage=`url(${spUrl('door')})`},ms);
+}
+
+/* ---------- выход на улицу, кофейня, цветочный ---------- */
+async function doorTap(){
+  if(LOCK||isOpen())return;
+  await goTo(0,9);await exitBuilding();
+}
+async function exitBuilding(){
+  LOCK=true;S.out=true;pl().style.visibility='hidden';
+  const o=op();o.style.display='';o.classList.remove('flip');S.opos.x=DOOR_X;o.style.transition='none';o.style.left=DOOR_X+'%';
+  showView('out');LOCK=false;
+}
+async function enterBuilding(instant){
+  if(!S.out){showView('in');return}
+  if(LOCK)return;LOCK=true;
+  if(!instant)await walkEl(op(),S.opos,DOOR_X,true);
+  S.out=false;op().style.display='none';
+  const p=pl();p.style.transition='none';p.style.visibility='';S.pos={L:0,x:9};
+  const q=pos(0,9);p.style.bottom=q.bottom;p.style.left=q.left;
+  showView('in');LOCK=false;
+  giftFx();
+}
+async function toShop(x){
+  if(LOCK||isOpen())return false;
+  if(!S.out){await goTo(0,9);await exitBuilding();await wait(250)}
+  LOCK=true;await walkEl(op(),S.opos,x,true);op().classList.remove('flip');LOCK=false;
+  return true;
+}
+async function cafeTap(){if(await toShop(CAFE_X))cafeSheet()}
+async function flowerTap(){if(await toShop(FLOWER_X))flowerSheet()}
+function cafePrice(){const n=W.coffeeBought||0;return Math.round(1200*(1+n*.5)/100)*100}
+function cafeSheet(){
+  const price=cafePrice(),team=price*3,full=W.ap>=AP_MAX;
+  sheet(`<h2>☕ Кофейня «Зерно»</h2><div class="sub">${full?'Энергия на максимуме ('+AP_MAX+' действий)':'Бодрит как надо · сейчас у тебя '+W.ap+' действий'}</div>
+  <div class="big">${charEl('barista',4)}<div class="note" style="flex:1">«Что вам, шеф? Эспрессо? Сегодня как раз свежая обжарка!»</div></div>
+  ${opts([
+   {l:`Эспрессо — ${fmt(price)} ₽`,d:'+1 действие на эту неделю',dis:full||S.wb-price<MIN_AD,fn:()=>buyCoffee(price,false)},
+   {l:`Кофе на всю команду — ${fmt(team)} ₽`,d:'+1 действие тебе и +10 настроения всем',dis:full||S.wb-team<MIN_AD,fn:()=>buyCoffee(team,true)},
+   {l:'Вернуться в офис',d:'Бесплатно',fn:()=>{closeSheet();enterBuilding()}},
+   {l:'Остаться на улице',d:'Бесплатно',fn:closeSheet}])}
+  <p style="font-size:12px;color:var(--soft)">Цена растёт с каждой чашкой за неделю. Деньги списываются из бюджета недели (на рекламу должно остаться от ${fmt(MIN_AD)} ₽).</p>`);
+}
+function buyCoffee(price,team){
+  S.wb-=price;W.coffeeBought=(W.coffeeBought||0)+1;W.ap=Math.min(AP_MAX,W.ap+1);
+  if(team)for(const k in S.mood)if(S.hired[k])S.mood[k]=clamp(S.mood[k]+10,0,100);
+  sfx.ding();hud();refreshMoods();
+  note(team?'☕ Кофе на всю команду! +1 действие, настроение +10':'☕ Эспрессо! +1 действие');
+  cafeSheet();
+}
+const girls=()=>['des','cop','tgt','ana'].filter(k=>S.hired[k]&&S.staff[k]&&S.staff[k].gender==='f');
+function flowerSheet(){
+  const g=girls(),p1=900,p2=2500,fresh_=g.filter(k=>!S.gifts[k]);
+  const items=g.map(k=>({l:`🌹 Роза для ${S.staff[k].name} — ${fmt(p1)} ₽`,d:S.gifts[k]?'Ей уже дарили цветы на этой неделе':'Настроение +15',dis:!!S.gifts[k]||S.wb-p1<MIN_AD,fn:()=>buyFlowers([k],p1,15)}));
+  if(g.length>=2)items.push({l:`💐 Букет всем девушкам — ${fmt(p2)} ₽`,d:'Настроение +25 каждой',dis:fresh_.length<2||S.wb-p2<MIN_AD,fn:()=>buyFlowers(fresh_,p2,25)});
+  sheet(`<h2>💐 Цветы «Ромашка»</h2><div class="sub">${g.length?'Порадуй девушек из команды':'В команде сейчас нет девушек'}</div>
+  <div class="big">${charEl('florist',4)}<div class="note" style="flex:1">«${g.length?'Цветы — лучший способ сказать «ты молодец» без слов!':'Цветы никому не мешают! Подождём, пока появится повод.'}»</div></div>
+  ${opts(items.concat([{l:'Вернуться в офис',d:'Бесплатно',fn:()=>{closeSheet();enterBuilding()}},{l:'Остаться на улице',d:'Бесплатно',fn:closeSheet}]))}
+  <p style="font-size:12px;color:var(--soft)">Деньги списываются из бюджета недели (на рекламу должно остаться от ${fmt(MIN_AD)} ₽). Цветы потом стоят на столе до конца недели.</p>`);
+}
+function buyFlowers(ids,price,gain){
+  S.wb-=price;
+  ids.forEach(k=>{S.mood[k]=clamp(S.mood[k]+gain,0,100);S.gifts[k]=true;if(!S.pendingGift.includes(k))S.pendingGift.push(k)});
+  sfx.praise();hud();refreshMoods();
+  note(`💐 Цветы куплены: ${ids.map(k=>S.staff[k].name).join(' и ')} будут рады (+${gain})`);
+  flowerSheet();
+}
+function giftFx(){
+  const ids=S.pendingGift.slice();S.pendingGift=[];
+  if(!ids.length)return;
+  render();
+  ids.forEach((k,i)=>setTimeout(()=>{const e=stEl(k);if(e){floatOn(e,'💖','#d6483f');say(e,'Ой, цветы! 💐');sfx.praise()}},400+i*500));
+}
+function note(t){const d=document.createElement('div');d.className='tst';d.textContent=t;$('#app').appendChild(d);setTimeout(()=>d.remove(),3000)}
+
+/* =====================  СОТРУДНИКИ ХОДЯТ ПО ОФИСУ  ===================== */
+const TRIP={},BUSY={};
+const WANDER={des:[18,38],cop:[42,62],tgt:[14,45],ana:[48,76],boss:[10,56]};
+const BREAK_P=.15;
+const person=id=>STATIONS.find(s=>s.id===id);
+const atDesk=id=>{const s=person(id);return Math.abs(s.cx-s.x)<1};
+const partnerOf=id=>{const p=PAIRS.find(p=>p.includes(id));return p?(p[0]===id?p[1]:p[0]):null};
+function stEl(id){return document.querySelector(`.st[data-id=${id}]`)}
+function cancelTrip(id){TRIP[id]=(TRIP[id]||0)+1;BUSY[id]=0}
+function resetStaff(){
+  for(const s of STATIONS)s.cx=s.x;
+  for(const k in S.chat)S.chat[k]=0;
+  ['des','cop','tgt','ana','boss'].forEach(cancelTrip);
+}
+async function moveStation(id,x){
+  const st=person(id),el=stEl(id),prev=st.cx;
+  st.cx=x;if(!el||Math.abs(x-prev)<.5)return;
+  const dur=Math.max(.6,Math.abs(x-prev)*.07);
+  el.classList.remove('atdesk');el.classList.add('walk');el.classList.toggle('flip',x<prev);
+  el.style.transition=`left ${dur}s linear, transform .25s`;
+  el.style.left=x+'%';
+  await wait(dur*1000+60);
+  const e2=stEl(id);if(e2){e2.classList.remove('walk','flip');if(atDesk(id))e2.classList.add('atdesk')}
+}
+function floatOn(el,txt,color){if(!el)return;const f=document.createElement('div');f.className='float';f.textContent=txt;f.style.left='50%';f.style.bottom='100%';f.style.color=color;el.appendChild(f);setTimeout(()=>f.remove(),1200)}
+function refreshMoods(){
+  document.querySelectorAll('.st[data-id] .mood').forEach(m=>{const id=m.parentElement.dataset.id;m.textContent=moodIcon(S.mood[id]);m.parentElement.classList.toggle('sad',S.mood[id]<40)});
+}
+function markChat(id){const e=stEl(id);if(e){e.dataset.chat='1';e.querySelectorAll('.bub').forEach(b=>b.remove());say(e,rpick(CHAT_LINES),true)}}
+function slapFx(el,txt){if(!el)return;const s=document.createElement('div');s.className='slapfx';s.textContent='💥 '+txt;s.style.left='50%';s.style.top='20px';el.appendChild(s);setTimeout(()=>s.remove(),520)}
+function sendHome(id){
+  cancelTrip(id);const tok=TRIP[id];BUSY[id]=1;
+  moveStation(id,person(id).x).then(()=>{if(TRIP[id]===tok)BUSY[id]=0});
+}
+async function callToWork(id){
+  const e=stEl(id);sfx.slap();slapFx(e,'ПЛЕСК!');say(e,'Ай! Иду работать!');
+  const o=partnerOf(id);const ids=[id];if(o&&S.chat[o])ids.push(o);
+  ids.forEach(i=>{S.chat[i]=0;cancelTrip(i);const el=stEl(i);if(el){delete el.dataset.chat;el.querySelectorAll('.bub.stay').forEach(b=>b.remove())}});
+  setTimeout(()=>ids.forEach((i,k)=>setTimeout(()=>sendHome(i),k*300)),500);
+}
+async function wander(id){
+  cancelTrip(id);const tok=TRIP[id];BUSY[id]=1;
+  const st=person(id),r=WANDER[id],x=r[0]+Math.random()*(r[1]-r[0]);
+  await moveStation(id,x);if(TRIP[id]!==tok)return;
+  if(Math.random()<.5){const l=LINES[id];const e=stEl(id);if(l&&e)say(e,rpick(l))}
+  await wait(1500+Math.random()*2500);if(TRIP[id]!==tok)return;
+  await moveStation(id,st.x);if(TRIP[id]!==tok)return;
+  BUSY[id]=0;
+}
+async function coffeeTrip(id){
+  const L=person(id).L;
+  cancelTrip(id);const tok=TRIP[id];BUSY[id]=1;
+  const partner=partnerOf(id);
+  const join=partner&&S.hired[partner]&&!BUSY[partner]&&!S.chat[partner]&&Math.random()<.45;
+  const ids=join?[id,partner]:[id];
+  if(join){cancelTrip(partner);BUSY[partner]=1}
+  const spots=COFFEE_SPOTS[L];
+  await Promise.all(ids.map((i,k)=>moveStation(i,spots[k])));
+  if(TRIP[id]!==tok)return;
+  const home=async()=>{await Promise.all(ids.map(i=>moveStation(i,person(i).x)));if(TRIP[id]===tok)ids.forEach(i=>BUSY[i]=0)};
+  if(!S.coffee[L].ok){
+    ids.forEach(i=>{S.mood[i]=clamp(S.mood[i]-4,0,100);const e=stEl(i);say(e,'Опять сломана!');floatOn(e,'😫 −4','#d6483f')});
+    refreshMoods();await wait(1800);if(TRIP[id]!==tok)return;return home();
+  }
+  if(Math.random()<BREAK_P){
+    breakMachine(L);ids.forEach(i=>say(stEl(i),'Ой! Она сломалась!'));
+    await wait(1800);if(TRIP[id]!==tok)return;return home();
+  }
+  ids.forEach(i=>{const g=S.staff[i].trait==='coffee'?12:8;S.mood[i]=clamp(S.mood[i]+g,0,100);const e=stEl(i);floatOn(e,'☕ +'+g,'#3f9a5a');say(e,'Ммм, кофе…')});
+  refreshMoods();sfx.pop();
+  if(join){ids.forEach(i=>{S.chat[i]=1;markChat(i)});return}
+  await wait(2600);if(TRIP[id]!==tok)return;
+  return home();
+}
+function routine(){
+  if(LOCK||isOpen()||!W||!$('#inside').classList.contains('on'))return;
+  const ids=['des','cop','tgt','ana','boss'].filter(id=>(id==='boss'||S.hired[id])&&!BUSY[id]&&!S.chat[id]);
+  if(!ids.length)return;
+  const id=rpick(ids),r=Math.random();
+  if(id==='boss'){if(r<.5)wander(id);return}
+  const cp=S.staff[id]&&S.staff[id].trait==='chatty'?.5:.3;
+  if(r<cp)coffeeTrip(id);else if(r<cp+.35)wander(id);
+}
+setInterval(routine,5500);
+
+/* =====================  КОФЕМАШИНЫ И МАСТЕР  ===================== */
+function refreshCoffee(){
+  document.querySelectorAll('.deco.cof').forEach(e=>{
+    const L=+e.dataset.cof,m=S.coffee[L];
+    const st=m.ok?'<div class="cofsteam"><i></i><i></i><i></i></div>':`<div class="cofwarn">${m.tech?'🔧 ремонт':'⚠ сломана'}</div>`;
+    e.innerHTML=`<div class="cofstat">${st}</div>${sp(m.ok?'coffee':'coffeeX',3)}`;
+  });
+}
+function breakMachine(L){S.coffee[L].ok=false;refreshCoffee();sfx.crash();note(`☕ Кофемашина сломалась (этаж ${L+1})`)}
+function coffeeSheet(L){
+  const m=S.coffee[L],n=L+1;
+  if(m.ok){sheet(`<h2>☕ Кофемашина</h2><div class="sub">Этаж ${n} · работает</div><p>Сотрудники ходят сюда за кофе: настроение +8. Если двое заболтаются, работа встанет. Иногда машина ломается.</p><div class="row"><button class="btn pri" onclick="closeSheet()">Ок</button></div>`);return}
+  if(m.tech){sheet(`<h2>🔧 Мастер в пути</h2><div class="sub">Этаж ${n}</div><p>Мастер уже едет или чинит кофемашину.</p><div class="row"><button class="btn pri" onclick="closeSheet()">Ок</button></div>`);return}
+  sheet(`<h2>⚠ Кофемашина сломана</h2><div class="sub">Этаж ${n}</div><p>Без кофе у сотрудников падает настроение. Мастер починит за ${fmt(TECH_COST)} ₽ из бюджета недели.</p>
+  ${opts([{l:`Вызвать мастера — ${fmt(TECH_COST)} ₽`,d:'Приедет через несколько секунд',dis:S.wb-TECH_COST<MIN_AD,fn:()=>callTech(L)},{l:'Позже',d:'Бесплатно',fn:closeSheet}])}`);
+}
+async function callTech(L){
+  const m=S.coffee[L];S.wb-=TECH_COST;m.tech=true;refreshCoffee();hud();closeSheet();
+  note('🔧 Мастер выехал, будет через несколько секунд');sfx.pop();
+  await wait(8000);runTech(L);
+}
+async function runTech(L){
+  const b=$('#bld'),m=S.coffee[L];
+  const t=document.createElement('div');t.className='actor';t.id='tech';
+  t.innerHTML=`<div class="you">МАСТЕР</div>${charEl('tech')}`;
+  const tp={x:7,L:0},q=pos(0,7);t.style.bottom=q.bottom;t.style.left=q.left;t.style.opacity='0';b.appendChild(t);
+  // мастер заходит с улицы: звонок, открывается дверь, он появляется на пороге
+  sfx.bell();doorFx(2200);note('🔧 Мастер пришёл — звонок в дверь');
+  await wait(450);t.style.opacity='1';say(t,'Здрасьте! Где тут кофемашина?');
+  await wait(900);
+  await walkEl(t,tp,14,false,.05);
+  if(L!==0){await walkEl(t,tp,ELEV,false,.04);await carTrip(t,0,L);tp.L=L}
+  await walkEl(t,tp,MACHINE[L].x-7,false,.04);
+  t.classList.remove('flip');
+  const machine=document.querySelector(`.deco.cof[data-cof="${L}"]`);
+  const bub=say(t,'Бзззт… тык-тык…',true);
+  if(machine)machine.classList.add('shake');
+  for(let i=0;i<5;i++){sfx.tink();await wait(650)}
+  if(machine)machine.classList.remove('shake');
+  bub.remove();
+  m.ok=true;m.tech=false;refreshCoffee();sfx.ding();note('☕ Кофемашина снова работает!');
+  const b2=say(t,'Готово! Пейте на здоровье',true);await wait(1600);b2.remove();
+  if(L!==0){await walkEl(t,tp,ELEV,false,.04);await carTrip(t,L,0);tp.L=0}
+  await walkEl(t,tp,7,false,.05);
+  sfx.bell();doorFx(1400);
+  t.style.opacity='0';await wait(500);
+  t.remove();
+}
+
+/* ---------- реплики ---------- */
+function say(el,txt,stay){const b=document.createElement('div');b.className='bub'+(stay?' stay':'');b.textContent=txt;el.appendChild(b);if(!stay)setTimeout(()=>b.remove(),3000);return b}
+setInterval(()=>{
+  if(LOCK||isOpen()||!$('#inside').classList.contains('on'))return;
+  const els=[...document.querySelectorAll('.st[data-can]')].filter(e=>!e.querySelector('.bub')&&!e.dataset.chat);
+  if(!els.length)return;
+  const e=rpick(els);const l=LINES[e.dataset.id];if(l)say(e,rpick(l));
+},3000);
+
+/* =====================  ПОСЕТИТЕЛИ: НОВЫЕ КЛИЕНТЫ  ===================== */
+let V=null;
+const visEl=()=>$('#visitor');
+function visitorTick(){
+  if(V||HQ||CT||LOCK||isOpen()||!W||!$('#inside').classList.contains('on'))return;
+  if(W.visits>=2||S.clientList.length>=3)return;
+  if(Math.random()<.14)spawnVisitor();
+}
+setInterval(visitorTick,6000);
+async function spawnVisitor(){
+  const avail=VTYPES.filter(t=>!S.clientList.some(c=>c.tid===t.id));
+  if(!avail.length||V||HQ)return;
+  const type=rpick(avail);W.visits++;
+  LOOK.vis=type.look;makeSheet('vis');
+  const tok=Date.now();V={type,state:'enter',x:7,tok};
+  const el=document.createElement('div');el.className='vis';el.id='visitor';
+  el.style.left='7%';el.style.bottom=`calc(0% + ${GROUND}px)`;el.style.opacity='0';
+  el.innerHTML=`<div class="tag">Посетитель</div>${charEl('vis')}`;
+  $('#bld').appendChild(el);
+  sfx.bell();doorFx(1800);
+  setTimeout(()=>{el.style.opacity='1'},60);
+  await visMove(19);
+  if(!V||V.tok!==tok)return;
+  V.state='wait';el.querySelector('.tag').textContent='❗ Посетитель';
+  say(el,'Здравствуйте! Это маркетинговое агентство?',true);
+  el.onclick=()=>visitorTap();
+  setTimeout(()=>{if(V&&V.tok===tok&&V.state==='wait')leaveVisitor()},32000);
+}
+async function visMove(x){
+  const el=visEl();if(!el||!V)return;const dx=x-V.x;if(Math.abs(dx)<.5)return;
+  el.classList.toggle('flip',dx<0);el.classList.add('walk');
+  const dur=Math.abs(dx)*.07;el.style.transition=`left ${dur}s linear,opacity .4s`;el.style.left=x+'%';V.x=x;
+  await wait(dur*1000+50);el.classList.remove('walk','flip');
+}
+async function leaveVisitor(msg){
+  const el=visEl();if(!el||!V)return;const tok=V.tok;V.state='leave';
+  el.querySelectorAll('.bub').forEach(b=>b.remove());
+  say(el,msg||'Пойду в другое агентство…');
+  await wait(1500);if(!V||V.tok!==tok)return;
+  await visMove(7);sfx.bell();doorFx(1200);
+  el.style.opacity='0';await wait(500);el.remove();if(V&&V.tok===tok)V=null;
+}
+async function visitorTap(){
+  if(LOCK||isOpen()||!V||V.state!=='wait')return;
+  V.state='talk';
+  await goTo(0,V.x-9);
+  visitorSheet();
+}
+function visitorSheet(){
+  const t=V.type;
+  const pitch=(kind)=>{
+    W.ap--;hud();
+    const match=t.pref===kind,p=clamp(.35+(S.trust-50)/250+(match?.3:0),.1,.9),ok=Math.random()<p;
+    V.state='resolve';
+    sfx.murmur(1.4);
+    if(ok){
+      const fee=kind==='discount'?1800:2500;
+      const line={cases:'«Цифры впечатляют! Беру!»',discount:'«Скидка — это любовь. По рукам!»',brief:'«Ого, у вас есть порядок. Согласен!»'}[kind];
+      const el=visEl(),sx=V.x;if(el)el.remove();V=null;
+      S.trust=clamp(S.trust+2,0,100);
+      const nc=addClient(t,fee);
+      setTimeout(()=>sfx.laugh(),500);sfx.win();
+      sheet(`<h2>🤝 Договорились!</h2><div class="sub">${t.title}</div><div class="big">${charEl('cl'+Math.min(S.clientList.length-1,2),4)}<div class="note good" style="flex:1">${line}</div></div>
+      <div class="note good">💼 Новый клиент: ${t.title}. К бюджету каждую неделю +${fmt(fee)} ₽, доверие +2.</div>
+      <p>${S.clientList.length<=3?'Клиент идёт к лифту и поднимается наверх: сядет на диван у панорамного окна.':'Для него пока нет свободного дивана, но договор подписан.'}</p>
+      <div class="row"><button class="btn pri" onclick="closeSheet()">Отлично</button></div>`,()=>escortClient(nc,sx,false));
+    }else{
+      const line=rpick(['«Хм… Подумаю. (Не подумает.)»','«Пожалуй, схожу к конкурентам».','«Дороговато. Или скучновато. Не пойму».','«Мне нужно посоветоваться с мамой».']);
+      setTimeout(()=>sfx.laugh(),500);
+      sheet(`<h2>🙅 Не вышло</h2><div class="sub">${t.title}</div><div class="big">${charEl('vis',4)}<div class="note warn" style="flex:1">${line}</div></div>
+      <p>Подход ${match?'был верным, но не повезло':'не совпал с тем, что любит этот клиент'}. Бывает.</p>
+      <div class="row"><button class="btn pri" onclick="closeSheet()">Ничего, дальше</button></div>`,()=>leaveVisitor('Подумаю…'));
+    }
+  };
+  sfx.murmur(1.6);
+  sheet(`<h2>🧑‍💼 Посетитель</h2><div class="sub">${t.title}</div>
+  <div class="big">${charEl('vis',4)}<div class="note" style="flex:1">«${t.intro}»</div></div>
+  <p style="font-size:11.5px;color:var(--soft)">Разговор бесплатный: действие тратится, только когда выберешь подход.</p>
+  ${opts([
+    {l:'📁 Показать кейсы',d:'1 действие · любят те, кто верит цифрам',dis:W.ap<1,fn:()=>pitch('cases')},
+    {l:'🏷 Скидка на первый месяц',d:'1 действие · легче договориться, но бюджет клиента меньше',dis:W.ap<1,fn:()=>pitch('discount')},
+    {l:'📝 Попросить бриф и прислать КП',d:'1 действие · для тех, кто любит порядок',dis:W.ap<1,fn:()=>pitch('brief')},
+    {l:'Попросить подождать',d:'Бесплатно',fn:closeSheet}])}`,()=>{if(V&&V.state==='talk')V.state='wait'});
+}
+function addClient(t,fee){
+  const idx=S.clientList.length;
+  const c={tid:t.id,name:t.name,short:t.short,title:t.title,fee,pref:t.pref,intro:t.intro};
+  S.clientList.push(c);
+  if(idx>=1&&idx<=2){const key=['boss','cl1','cl2'][idx];LOOK[key]=t.look;makeSheet(key);c.seated=false}
+  hud();render();return c;
+}
+/* новый клиент не появляется на диване сразу: заходит, едет на лифте и идёт к дивану */
+let CT=0;                                        // сколько клиентов сейчас в пути
+async function escortClient(c,sx,fromDoor){
+  const idx=S.clientList.indexOf(c);
+  if(idx<1||idx>2||c.seated!==false)return;     // для третьего и дальше дивана нет
+  CT++;
+  const key=['boss','cl1','cl2'][idx];
+  const el=document.createElement('div');el.className='actor';
+  try{
+    el.innerHTML=charEl(key);
+    const tp={x:sx,L:0},q=pos(0,sx);el.style.bottom=q.bottom;el.style.left=q.left;
+    if(fromDoor){el.style.opacity='0';sfx.bell();doorFx(1700)}
+    $('#bld').appendChild(el);
+    if(fromDoor){await wait(120);el.style.opacity='1';await wait(600)}
+    say(el,'Мне наверх, к дивану!');
+    await wait(900);
+    await walkEl(el,tp,ELEV,false,.05);               // идёт к лифту
+    await carTrip(el,0,2);tp.L=2;                     // едет на 3-й этаж
+    await walkEl(el,tp,person(key).x,false,.05);      // идёт к своему дивану
+    el.classList.remove('flip');
+    c.seated=true;el.remove();render();               // садится
+    const e=stEl(key);if(e){say(e,'Диван у окна — бомба!');sfx.pop()}
+  }finally{
+    if(c.seated===false)c.seated=true;
+    if(el.parentNode)el.remove();
+    CT--;
+  }
+}
+
+/* =====================  ЛИСТЫ  ===================== */
+function isOpen(){return $('#ov').classList.contains('on')}
+function sheet(html,onClose){$('#sheet').innerHTML=html;$('#ov').classList.add('on');pending=onClose||null;sfx.pop()}
+function closeSheet(){$('#ov').classList.remove('on');lockSheet(false);const f=pending;pending=null;f&&f()}
+$('#ov').addEventListener('click',e=>{if(e.target.id==='ov'&&!$('#sheet').dataset.lock)closeSheet()});
+window.pick=i=>{const f=window.__opts[i];if(f)f()};
+function opts(list){window.__opts=list.map(o=>o.fn);return list.map((o,i)=>`<button class="opt" ${o.dis?'disabled':''} onclick="pick(${i})"><b>${o.l}</b><small>${o.d||''}</small></button>`).join('')}
+function lockSheet(v){$('#sheet').dataset.lock=v?'1':''}
+function floatTxt(t,x,c){const el=document.createElement('div');el.className='float';el.textContent=t;el.style.left=S.pos.x+'%';el.style.bottom=`calc(${S.pos.L*FLOOR_H}% + 100px)`;el.style.color=c;$('#bld').appendChild(el);setTimeout(()=>el.remove(),1200)}
+function toast(t){floatTxt(t,50,'#d6483f')}
+
+function openStation(st){
+  if(st.id==='board')return showBrief();
+  if(st.client===0)return bossTalk();
+  if(st.client>0)return clientChat(st.client);
+  if(st.id==='cr')return creatorDesk();
+  if(!S.hired[st.id])return vacancySheet(st.id);
+  personSheet(st.id);
+}
+function showBrief(){
+  const b=BRIEFS[S.week-1],pr=payroll();
+  sheet(`<h2>📋 ${b.t}</h2><div class="sub">${b.who}</div>
+  <p>${b.txt}</p><div class="note"><b>Аудитория:</b> ${b.aud}</div>
+  <div class="grid"><div class="kpi"><small>Бюджет недели</small><b>${fmt(S.wb)} ₽</b></div><div class="kpi"><small>Цель (KPI)</small><b>${b.kpi.label}</b></div></div>
+  <p style="color:var(--soft);font-size:12.5px">Из бюджета уже вычтены зарплаты команды: ${fmt(pr)} ₽ в неделю. Сходи к людям, подготовь креатив и таргет, выбери блогеров, затем запускай неделю. На всё у тебя ${W.ap} действия. Следи, чтобы команда не заболталась у кофемашины.</p>
+  <div class="row"><button class="btn pri" onclick="closeSheet()">Понял</button></div>`);
+}
+function bossTalk(){
+  const last=S.hist[S.hist.length-1];
+  const can=W.ap>0&&!W.reported;
+  sfx.murmur(1.1);
+  sheet(`<h2>👩‍🦰 Марина</h2><div class="sub">Клиент · доверие ${Math.round(S.trust)}%</div>
+  <p>${last?(last.hit?'Хорошие цифры. Расскажи, как ты это сделал?':'Прошлая неделя меня не убедила. Что меняем?'):'Привет! Рада, что вы взялись за наш запуск.'}</p>
+  <p style="font-size:11.5px;color:var(--soft)">Разговор бесплатный: действие тратится, только если выберешь пункт ниже.</p>
+  ${opts([
+   {l:'Коротко отчитаться о прошлой неделе',d:'Тратит 1 действие. '+(last?(last.hit?'Подчеркнёшь результат: доверие +4':'Честно объяснишь причину: доверие +2'):'Пока отчитываться не о чем'),dis:!can||!last,fn:()=>{W.ap--;W.reported=true;S.trust+=last.hit?4:2;sfx.slap();hud();floatTxt('🤝+',30,'#3f9a5a');closeSheet()}},
+   {l:'Показать идею на неделю',d:'Тратит 1 действие. Согласуешь подход: +4 к креативу',dis:W.ap<1||W.pitched,fn:()=>{W.ap--;W.pitched=true;W.content+=4;sfx.slap();hud();floatTxt('Креатив +4',30,'#5b8def');closeSheet()}},
+   {l:'Выйти',d:'Бесплатно: действие не тратится',fn:closeSheet}])}`);
+}
+function clientChat(i){
+  const c=S.clientList[i];if(!c)return;
+  sfx.murmur(1);
+  sheet(`<h2>🛋 ${c.name}</h2><div class="sub">${c.title} · +${fmt(c.fee)} ₽ к бюджету в неделю</div>
+  <div class="big">${charEl(['boss','cl1','cl2'][i],4)}<div class="note" style="flex:1">«${rpick(CLIENT_CHAT)}»</div></div>
+  <p style="font-size:11.5px;color:var(--soft)">Разговор бесплатный.</p>
+  <div class="row"><button class="btn pri" onclick="closeSheet()">Ок</button></div>`);
+}
+
+/* ---------- найм: кандидаты приходят ко входу, к ним нужно подойти ---------- */
+let HQ=null;                                // открытая вакансия: {id,P,state,deadline,iv,tok}
+const HQ_SPOTS=[21,15,9], HQ_STAND=30, HQ_WAIT=60000;
+const mmss=ms=>{const s=Math.max(0,Math.ceil(ms/1000));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+function poolFor(id){
+  const P=S.pool[id];
+  if(P&&P.week===S.week)return P;
+  return S.pool[id]={week:S.week,cands:[0,1,2].map(()=>genCandidate(id)),sel:[],stage:'pick',done:false};
+}
+function candSprites(P){P.cands.forEach((c,i)=>{LOOK['c'+i]=c.look;makeSheet('c'+i)})}
+const cwEl=i=>document.getElementById('cw'+i);
+function hqTag(txt){const t=document.querySelector('#cw1 .tag');if(t)t.textContent=txt}
+function hqBubbles(){document.querySelectorAll('.cw .bub').forEach(b=>b.remove())}
+
+/* 1. нажали на пустой стол: открыть вакансию */
+function vacancySheet(id){
+  if(HQ){note(HQ.id===id?'Кандидаты уже ждут у входа: подойди к ним':'У входа уже ждут кандидаты на другую вакансию');return}
+  if(V){note('У входа посетитель: сначала поговори с ним');return}
+  const P=S.pool[id];
+  if(P&&P.week===S.week&&P.done){
+    sheet(`<h2>📢 Вакансия: ${HIRE[id].n}</h2><p>Сегодня больше никто не придёт. Загляни на следующей неделе: появятся новые кандидаты.</p><div class="row"><button class="btn pri" onclick="closeSheet()">Ок</button></div>`);
+    return;
+  }
+  sheet(`<h2>📢 Вакансия: ${HIRE[id].n}</h2><div class="sub">Свободный стол</div>
+  <p>Кандидаты придут к входу на первом этаже. Подойди к ним сам, выбери двоих для собеседования и реши, кого брать. Если не подойдёшь за минуту, они уйдут.</p>
+  ${opts([{l:'Открыть вакансию',d:'Бесплатно · придут трое',fn:()=>{closeSheet();openVacancy(id)}},{l:'Не сейчас',d:'Бесплатно',fn:closeSheet}])}`);
+}
+
+/* 2. человечки приходят и ждут у входа */
+async function candMove(el,x){
+  if(!el)return;
+  const dx=x-parseFloat(el.dataset.x);if(Math.abs(dx)<.5)return;
+  el.classList.toggle('flip',dx<0);el.classList.add('walk');
+  const dur=Math.abs(dx)*.06;el.style.transition=`left ${dur}s linear,opacity .4s`;el.style.left=x+'%';el.dataset.x=x;
+  await wait(dur*1000+50);el.classList.remove('walk','flip');
+}
+async function openVacancy(id){
+  const P=poolFor(id);candSprites(P);
+  const h=HQ={id,P,state:'arrive',deadline:0,iv:null};
+  sfx.murmur(1.8);note('📢 Вакансия открыта: кандидаты идут к входу');
+  const walks=[];
+  for(let i=0;i<3;i++){
+    if(HQ!==h)return;
+    const el=document.createElement('div');el.className='cw';el.id='cw'+i;el.dataset.x=7;
+    el.style.left='7%';el.style.bottom=`calc(0% + ${GROUND}px)`;el.style.opacity='0';
+    el.innerHTML=(i===1?'<div class="tag">Кандидаты</div>':'')+charEl('c'+i);
+    el.onclick=()=>candTap();
+    $('#bld').appendChild(el);
+    sfx.bell();doorFx(1500);
+    setTimeout(()=>{el.style.opacity='1'},80);
+    walks.push(candMove(el,HQ_SPOTS[i]));
+    await wait(1000);
+  }
+  await Promise.all(walks);
+  if(HQ!==h)return;
+  h.state='wait';startHQTimer();
+  const mid=cwEl(1);if(mid)say(mid,'Мы на собеседование!',true);
+}
+function startHQTimer(){
+  const h=HQ;h.deadline=Date.now()+HQ_WAIT;h.warned=false;clearInterval(h.iv);
+  hqTag('⏳ Кандидаты '+mmss(HQ_WAIT));
+  h.iv=setInterval(()=>{
+    if(HQ!==h){clearInterval(h.iv);return}
+    if(h.state!=='wait')return;
+    if(isOpen()){h.deadline+=500;return}             // пока открыт лист, время стоит
+    const left=h.deadline-Date.now();
+    hqTag('⏳ Кандидаты '+mmss(left));
+    if(left<=15000&&!h.warned){h.warned=true;note('⏳ Кандидаты у входа скоро уйдут')}
+    if(left<=0)hqTimeout();
+  },500);
+}
+
+/* 3. кандидаты уходят: сами (не дождались) или после решения */
+async function candLeave(i,line){
+  const el=cwEl(i);if(!el||el.dataset.leaving)return;
+  el.dataset.leaving='1';el.onclick=null;el.querySelectorAll('.bub').forEach(b=>b.remove());
+  if(line)say(el,line);
+  await wait(900);
+  await candMove(el,7);
+  sfx.bell();doorFx(1200);
+  el.style.opacity='0';await wait(500);el.remove();
+}
+function hqTimeout(){
+  const h=HQ;if(!h)return;
+  h.state='leave';clearInterval(h.iv);h.P.done=true;HQ=null;
+  note('Кандидаты не дождались и ушли. Новые придут на следующей неделе');
+  const lines=['Не дождались…','Пойду в другое агентство','Все заняты, видимо'];
+  [0,1,2].forEach((i,k)=>setTimeout(()=>candLeave(i,lines[k]),k*600));
+}
+function dismissHQ(){
+  if(HQ){clearInterval(HQ.iv);HQ=null}
+  document.querySelectorAll('.cw').forEach(e=>e.remove());
+}
+function hqResume(){                                  // закрыли лист, не решив: ждут ещё минуту
+  if(!HQ||HQ.state!=='talk')return;
+  HQ.state='wait';startHQTimer();
+  const mid=[1,0,2].map(cwEl).find(Boolean);
+  if(mid)say(mid,'Подождём ещё…',false);
+}
+
+/* 4. подошёл к кандидатам: выбор двоих, собеседования, решение */
+async function candTap(){
+  if(LOCK||isOpen()||!HQ||HQ.state!=='wait')return;
+  const h=HQ;h.state='talk';hqBubbles();hqTag('🎤 Беседа');
+  await goTo(0,HQ_STAND);
+  if(HQ!==h)return;
+  pl().classList.add('flip');
+  engageCands();
+}
+function engageCands(){
+  const P=HQ.P;
+  sfx.murmur(1.2);
+  if(P.stage==='decide'&&P.sel.length===2)return decideSheet();
+  if(P.stage==='interview'&&P.sel.length===2)return interview(0);
+  P.stage='pick';showCands();
+}
+function showCands(){
+  const P=HQ.P,id=HQ.id;
+  sheet(`<h2>🧑‍💼 Собеседование</h2><div class="sub">На роль «${HIRE[id].n}» пришли трое. Выбери двоих для беседы.</div>
+  <div class="cands">${P.cands.map((c,i)=>`<button class="cand ${P.sel.includes(i)?'on':''}" onclick="candPick(${i})">${charEl('c'+i,3)}<b>${c.name}</b><small>${c.age} лет<br>В резюме: <b>${LV[c.claim].t}</b></small><em>«${c.quip}»</em></button>`).join('')}</div>
+  <p style="font-size:12px;color:var(--soft)">Что на самом деле умеет человек и сколько хочет, станет ясно на собеседовании. Резюме иногда приукрашивают.</p>
+  <div class="row"><button class="btn" onclick="closeSheet()">Не сейчас</button><button class="btn pri" ${P.sel.length===2?'':'disabled'} onclick="startInterviews()">Собеседовать (${P.sel.length}/2)</button></div>`,hqResume);
+}
+window.candPick=i=>{
+  const P=HQ.P,k=P.sel.indexOf(i);
+  if(k>=0)P.sel.splice(k,1);else{if(P.sel.length>=2)P.sel.shift();P.sel.push(i)}
+  sfx.pop();showCands();
+};
+window.startInterviews=()=>{
+  const P=HQ.P;P.stage='interview';
+  const third=[0,1,2].find(i=>!P.sel.includes(i));
+  candLeave(third,'Ладно, спасибо!');                  // третий уходит сразу
+  interview(0);
+};
+function starsOf(n){return '<span class="stars">'+'★'.repeat(n)+'☆'.repeat(3-n)+'</span>'}
+window.interview=function(k){
+  const P=HQ.P,ci=P.sel[k],c=P.cands[ci];
+  const tr=TRAITS[c.trait],lv=LV[c.level];
+  sfx.murmur(2.6);setTimeout(()=>sfx.laugh(),1500);
+  sheet(`<h2>🎤 Собеседование ${k+1}/2</h2><div class="sub">${c.name}, ${c.age} · ${HIRE[HQ.id].n}</div>
+  <div class="big">${charEl('c'+ci,4)}<div style="flex:1">
+    <div class="note"><b>— ${c.qa[0][0]}</b><br>«${c.qa[0][1]}»</div>
+    <div class="note"><b>— ${c.qa[1][0]}</b><br>«${c.qa[1][1]}»</div></div></div>
+  <div class="grid">
+    <div class="kpi"><small>Опыт</small><b>${lv.t} · ${c.years} ${c.years===1?'год':c.years>=5||c.years===0?'лет':'года'}</b></div>
+    <div class="kpi"><small>Навык</small><b>${starsOf(lv.stars)}</b></div>
+    <div class="kpi" style="grid-column:1/3"><small>Черта характера</small><b style="font-size:14px">${tr.n}</b><small>${tr.d}</small></div>
+    <div class="kpi"><small>Хочет в неделю</small><b>${fmt(c.salary)} ₽</b></div>
+    <div class="kpi ${c.liar?'bad':'ok'}"><small>Резюме</small><b style="font-size:13px">${c.liar?'⚠ приукрасил(а): писал(а) '+LV[c.claim].t:'честное'}</b></div>
+  </div>
+  <div class="row"><button class="btn pri" onclick="${k===0?'interview(1)':'decideSheet()'}">${k===0?'Следующий кандидат':'К решению'}</button></div>`,hqResume);
+};
+window.decideSheet=function(){
+  const P=HQ.P,id=HQ.id;P.stage='decide';
+  sfx.murmur(1.4);
+  const card=(i)=>{
+    const c=P.cands[i],lv=LV[c.level],tr=TRAITS[c.trait],afford=S.wb-c.salary>=MIN_AD;
+    return `<button class="cand" ${afford?'':'disabled'} onclick="signCand(${i})">${charEl('c'+i,3)}<b>${c.name}</b>
+      <small>${lv.t} · ${starsOf(lv.stars)}<br>${tr.n}</small><em><b>${fmt(c.salary)} ₽/нед</b><br>${afford?'Взять':'не хватает бюджета'}</em></button>`;
+  };
+  sheet(`<h2>🤝 Решение</h2><div class="sub">Кого берём на «${HIRE[id].n}»? Зарплата платится каждую неделю.</div>
+  <div class="cands">${P.sel.map(card).join('')}</div>
+  <p style="font-size:12px;color:var(--soft)">Дешёвый — экономит бюджет, но слабее. Дорогой и опытный — сильнее влияет на результат. Первая зарплата списывается сразу; на рекламу после найма должно остаться от ${fmt(MIN_AD)} ₽. Сейчас зарплаты команды: ${fmt(payroll())} ₽ в неделю.</p>
+  <div class="row"><button class="btn" onclick="postponeHire()">Отложить</button><button class="btn" onclick="rejectBoth()">Отказать обоим</button></div>`,hqResume);
+};
+window.postponeHire=()=>closeSheet();
+window.rejectBoth=()=>{
+  const h=HQ,P=h.P;h.state='leave';clearInterval(h.iv);P.done=true;HQ=null;
+  closeSheet();
+  P.sel.forEach((i,k)=>setTimeout(()=>candLeave(i,rpick(['Ну и ладно…','Жаль, а так хотелось!'])),k*500));
+  note('Оба кандидата ушли. Новые придут на следующей неделе');
+};
+window.signCand=i=>{
+  const h=HQ,P=h.P,c=P.cands[i];
+  if(S.wb-c.salary<MIN_AD)return;
+  h.state='leave';clearInterval(h.iv);P.done=true;HQ=null;
+  closeSheet();
+  const other=P.sel.find(k=>k!==i);
+  const mine=cwEl(i);if(mine){mine.onclick=null;mine.style.opacity='0';setTimeout(()=>mine.remove(),500)}
+  candLeave(other,'Спасибо за собеседование!');
+  joinStaff(h.id,c,c.salary,0);
+  sfx.slap();setTimeout(()=>sfx.laugh(),400);
+  setTimeout(()=>{const e=stEl(h.id);if(e){slapFx(e,'ДОБРО ПОЖАЛОВАТЬ!');say(e,'Привет, босс!')}},250);
+};
+function joinStaff(id,c,salary,severance){
+  S.staff[id]={name:c.name,gender:c.gender,level:c.level,skill:LV[c.level].skill,salary,trait:c.trait};
+  PEOPLE[id].n=c.name;
+  LOOK[id]=c.look;makeSheet(id);
+  S.hired[id]=1;S.mood[id]=75;S.chat[id]=0;
+  S.wb-=salary+severance;
+  cancelTrip(id);person(id).cx=person(id).x;
+  hud();render();
+}
+
+/* ---------- сотрудник: задания, похвала ---------- */
+function personSheet(id){
+  const p=PEOPLE[id],s=S.staff[id],lv=LV[s.level],tr=TRAITS[s.trait];
+  const f=moodF(id),eff=effOf(id),low=f<1;
+  const cost=s.trait==='workaholic'?6:s.trait==='perfect'?13:10;
+  const list=p.acts.map(a=>({l:a.l,d:`${a.d} · 1 действие`,dis:W.ap<1,fn:()=>{
+    a.fx(eff);W.ap--;W.acts[id]++;S.mood[id]=clamp(S.mood[id]-cost,0,100);
+    if(low){W.lowMood[id]=1;toast('Плохое настроение: '+p.n+' работает хуже')}
+    sfx.slap();hud();render();if(!atDesk(id))sendHome(id);closeSheet();setTimeout(()=>{const e=stEl(id);if(e){slapFx(e,'ШЛЁП!');say(e,'Принял, сделаю!')}},120);
+  }}));
+  const n=W.praised[id]||0,gain=[30,15,6][Math.min(n,2)];
+  list.push({l:'👏 Похвалить',d:`1 действие · настроение сразу +${gain}${n?' (на этой неделе уже хвалили)':''}`,dis:W.ap<1||S.mood[id]>=100,fn:()=>{
+    W.ap--;W.praised[id]=n+1;S.mood[id]=clamp(S.mood[id]+gain,0,100);
+    sfx.praise();hud();render();if(!atDesk(id))sendHome(id);closeSheet();
+    setTimeout(()=>{const e=stEl(id);if(e){floatOn(e,'💖 +'+gain,'#d6483f');say(e,rpick(PRAISE_REPLY))}},120);
+  }});
+  sheet(`<h2>${emo(id)} ${p.n}</h2><div class="sub">${p.role} · ${lv.t} ${starsOf(lv.stars)} · ${fmt(s.salary)} ₽/нед</div>
+  <div class="note">Настроение ${moodIcon(S.mood[id])} <b>${S.mood[id]}%</b> · эффективность <b>×${eff.toFixed(2).replace('.',',')}</b><br><small>Черта: ${tr.n} — ${tr.d}.</small></div>
+  ${low?'<div class="note warn">Плохое настроение: человек работает хуже и это попадёт в результат недели. Похвали его — настроение поднимется сразу.</div>':''}
+  ${opts(list.concat([{l:'Назад',d:'Бесплатно',fn:closeSheet}]))}`);
+}
+function creatorDesk(){
+  const b=BRIEFS[S.week-1];
+  const hint=W.insight?`<div class="note good">📈 ${PEOPLE.ana.n}: для этой недели лучше ${b.fit==='micro'?'микро-блогеры':b.fit==='macro'?'макро-блогеры':'любой формат'}.</div>`:'';
+  sheet(`<h2>📱 Блогеры</h2><div class="sub">Кого берём на размещения</div>${hint}
+  <p><b>Микро</b> (до 50 тыс.): дороже за показ, но живая аудитория и высокий ER.<br><b>Макро</b> (от 300 тыс.): дёшево за охват, низкий ER, риск неточного попадания.</p>
+  <div class="seg"><button class="${S.creator==='micro'?'on':''}" onclick="setCr('micro')">Микро</button><button class="${S.creator==='macro'?'on':''}" onclick="setCr('macro')">Макро</button></div>
+  <div class="row"><button class="btn pri" onclick="closeSheet()">Готово</button></div>`);
+}
+window.setCr=t=>{S.creator=t;creatorDesk()};
+
+/* ---------- в гости к другим агентствам: переманивание ---------- */
+function guestsSheet(){
+  sheet(`<h2>🤝 Агентства рядом</h2><div class="sub">В гости можно зайти только с разрешения хозяев</div>
+  ${opts(RIVALS.map(r=>({l:r.name,d:`Хозяин: ${r.owner} · лига ${r.league} · доверие ${r.trust} · команда ${r.staff.length}`,fn:()=>askVisit(r)})).concat([{l:'Закрыть',d:'Бесплатно',fn:closeSheet}]))}
+  <p style="font-size:12px;color:var(--soft)">Пока это имитация. Позже здесь будут настоящие игроки: друг разрешает зайти, и ты можешь попробовать переманить его сотрудника.</p>`);
+}
+function askVisit(r){
+  sfx.murmur(1.4);
+  if(r.permWeek===S.week)return visitSheet(r);
+  if(r.askedWeek===S.week){
+    sheet(`<h2>🚪 ${r.name}</h2><p>${r.owner} уже отвечал на этой неделе. Попробуй зайти позже.</p><div class="row"><button class="btn pri" onclick="guestsSheet()">Назад</button></div>`);return;
+  }
+  r.askedWeek=S.week;
+  const p=clamp(r.perm+(S.trust-r.trust)/300,.2,.95);
+  if(Math.random()<p){
+    r.permWeek=S.week;
+    sheet(`<h2>🚪 ${r.name}</h2><div class="note good">${r.owner}: «${rpick(['Заходи, кофе уже налит!','Давай, только ничего не воруй. Людей — особенно.','Заходи, у нас как раз шумно.'])}»</div><div class="row"><button class="btn pri" onclick="visitSheet(RIVALS[${RIVALS.indexOf(r)}])">Войти</button></div>`);
+    setTimeout(()=>sfx.laugh(),600);
+  }else{
+    sheet(`<h2>🚪 ${r.name}</h2><div class="note warn">${r.owner}: «${rpick(['Сейчас дедлайн, приходи на следующей неделе.','Извини, у нас закрытая вечеринка.','Зная, зачем ты идёшь… нет.'])}»</div><div class="row"><button class="btn pri" onclick="guestsSheet()">Назад</button></div>`);
+    setTimeout(()=>sfx.laugh(),500);
+  }
+}
+window.visitSheet=function(r){
+  sfx.murmur(1.6);
+  const rows=r.staff.map((c,j)=>`<button class="opt" onclick="poachSheet(${RIVALS.indexOf(r)},${j})"><div class="srow">${charEl(c.key,2)}<div><b>${c.name} · ${ROLE_N[c.role]}</b><small>${LV[c.level].t} · ${fmt(c.salary)} ₽/нед · настроение ${moodIcon(c.mood)}</small></div></div></button>`).join('');
+  sheet(`<h2>🏢 ${r.name}</h2><div class="sub">Ты в гостях у ${r.owner}. Можно поговорить с сотрудником и предложить зарплату повыше.</div>
+  ${rows||'<p>Здесь сейчас никого нет.</p>'}
+  <div class="row"><button class="btn" onclick="guestsSheet()">Назад</button><button class="btn pri" onclick="closeSheet()">Уйти</button></div>`);
+};
+function poachChance(r,c,pct){
+  const mood=clamp((60-c.mood)/200,-.12,.15),loy=-c.loyalty*.35,rep=clamp((S.trust-r.trust)/400,-.08,.08);
+  return clamp(.12+pct/100*.9+mood+loy+rep,.04,.9);
+}
+const oddsTxt=p=>p<.2?'шансы малы':p<.45?'50 на 50':'шансы хорошие';
+window.poachSheet=function(ri,j){
+  const r=RIVALS[ri],c=r.staff[j];if(!c)return visitSheet(r);
+  const cur=S.hired[c.role]&&S.staff[c.role],sev=cur?cur.salary:0;
+  const offer=pct=>Math.round(c.salary*(1+pct/100)/100)*100;
+  const mk=pct=>({l:`Предложить ${fmt(offer(pct))} ₽/нед (+${pct}%)`,d:`1 действие · ${oddsTxt(poachChance(r,c,pct))}`,dis:W.ap<1||S.wb-offer(pct)-sev<MIN_AD,fn:()=>poachOffer(ri,j,pct)});
+  sheet(`<h2>${c.name} · ${ROLE_N[c.role]}</h2><div class="sub">${r.name}</div>
+  <div class="big">${charEl(c.key,4)}<div class="note" style="flex:1">${LV[c.level].t} ${starsOf(LV[c.level].stars)}<br>Сейчас получает ${fmt(c.salary)} ₽/нед<br>Настроение: ${moodIcon(c.mood)} · ${c.loyalty>.55?'очень лояльный(ая)':c.loyalty>.35?'довольно лояльный(ая)':'лояльность невысока'}<br>Черта: ${TRAITS[c.trait].n}</div></div>
+  ${cur?`<div class="note warn">Стол «${ROLE_N[c.role]}» занят: ${cur.name} уйдёт, выходное пособие ${fmt(sev)} ₽. Первая зарплата нового сотрудника списывается сразу.</div>`:'<div class="note">Стол свободен: сотрудник займёт его. Первая зарплата списывается сразу.</div>'}
+  ${opts([mk(10),mk(30),mk(60),{l:'Назад',d:'Бесплатно',fn:()=>visitSheet(r)}])}
+  <p style="font-size:12px;color:var(--soft)">Согласится или нет, решит случай: чем выше предложение и чем хуже у человека настроение, тем больше шансов. Переманивание портит репутацию на рынке (доверие −3).</p>`);
+};
+window.poachOffer=function(ri,j,pct){
+  const r=RIVALS[ri],c=r.staff[j];
+  const sev=S.hired[c.role]&&S.staff[c.role]?S.staff[c.role].salary:0,offer=Math.round(c.salary*(1+pct/100)/100)*100;
+  W.ap--;hud();sfx.murmur(1.6);
+  const ok=Math.random()<poachChance(r,c,pct);
+  if(ok){
+    const old=S.hired[c.role]&&S.staff[c.role]?S.staff[c.role].name:null;
+    r.staff.splice(j,1);
+    joinStaff(c.role,c,offer,sev);
+    S.trust=clamp(S.trust-3,0,100);
+    sfx.win();setTimeout(()=>sfx.laugh(),500);
+    sheet(`<h2>🎉 Согласился(ась)!</h2><div class="big">${charEl(c.role,4)}<div class="note good" style="flex:1">«${rpick(['Знаете, а вы убедительны. Беру вещи!','Ладно, кофемашина у вас всё равно лучше. Согласна!','Наконец-то меня оценили! Соглашаюсь.'])}»</div></div>
+    <div class="note good">${c.name} переходит к тебе на ${fmt(offer)} ₽/нед.${old?` ${old} уходит, выходное пособие ${fmt(sev)} ₽.`:''}</div>
+    <div class="note warn">Рынок не любит переманивание: доверие −3.</div>
+    <div class="row"><button class="btn pri" onclick="closeSheet()">Отлично</button></div>`);
+  }else{
+    const hi=c.loyalty>=.55;
+    const line=hi?rpick(['Я тут с самого начала. Не продаюсь!','Лояльность не покупается. Но предложение приятное.','Меня здесь любят. Вас — пока нет.']):rpick(['Хм… Подумаю… нет, всё-таки нет.','Мало. Очень мало.','Спасибо, но у нас на этаже есть кот.','Вы серьёзно? За эти деньги? Ха!']);
+    setTimeout(()=>sfx.laugh(),450);
+    sheet(`<h2>🙅 Отказ</h2><div class="big">${charEl(c.key,4)}<div class="note warn" style="flex:1">«${line}»</div></div>
+    <p>Можно попробовать ещё раз с другим предложением (каждая попытка тратит действие).</p>
+    <div class="row"><button class="btn" onclick="poachSheet(${ri},${j})">Ещё раз</button><button class="btn pri" onclick="visitSheet(RIVALS[${ri}])">Назад</button></div>`);
+  }
+};
+
+/* =====================  РАСЧЁТ НЕДЕЛИ  ===================== */
+function calc(brief,share,creator,cq,tq,rand=Math.random){
+  const wb=S.wb,ads=wb*share/100,cr=wb-ads;
+  const CPM=clamp(330-tq*1.9,110,400);
+  const imp=ads/CPM*1000;
+  const CTR=0.5+cq*0.022;
+  const clicks=imp*CTR/100;
+  const CVR=1.8+cq*0.03;
+  const convAds=clicks*CVR/100;
+  const cm=creator==='micro'?{cpm:140,er:6.5}:{cpm:85,er:1.8};
+  let fit=brief.fit===creator?1:brief.fit==='any'?.9:.55;
+  let risk=false;if(creator==='macro'&&rand()<.25){fit*=.6;risk=true}
+  const crReach=cr/cm.cpm*1000;
+  const eng=crReach*cm.er/100*fit;
+  const convCr=eng*0.008;
+  const noise=.92+rand()*.16;
+  const conv=(convAds+convCr)*noise;
+  const reach=imp+crReach;
+  const rev=conv*brief.check;
+  return {ads,cr,CPM,imp,CTR,clicks,CVR,conv,crReach,eng,reach,risk,fit,spend:wb,CPA:wb/conv,ROAS:rev/wb,ER:(clicks*1.5+eng)/reach*100,rev};
+}
+function launchSheet(){
+  const b=BRIEFS[S.week-1];
+  const draw=()=>{
+    const ads=Math.round(S.wb*S.share/100/500)*500;
+    $('#lsAds').textContent=fmt(ads)+' ₽';$('#lsCr').textContent=fmt(S.wb-ads)+' ₽';$('#lsPct').textContent=S.share+'% / '+(100-S.share)+'%';
+  };
+  const chatting=Object.keys(S.chat).filter(k=>S.chat[k]).map(k=>PEOPLE[k].n);
+  const sad=['des','cop','tgt','ana'].filter(k=>S.hired[k]&&S.mood[k]<40).map(k=>PEOPLE[k].n);
+  sheet(`<h2>🚀 Запуск недели</h2><div class="sub">${b.t} · цель: ${b.kpi.label}</div>
+  ${chatting.length?`<div class="note warn">☕ ${chatting.join(' и ')} заболтались у кофемашины. Если запустить сейчас, качество упадёт.</div>`:''}
+  ${sad.length?`<div class="note warn">😫 ${sad.join(' и ')} не в настроении: работа идёт хуже. Можно похвалить (1 действие).</div>`:''}
+  <p><b>Как поделить бюджет ${fmt(S.wb)} ₽?</b></p>
+  <input type="range" min="0" max="100" step="5" value="${S.share}" id="rng">
+  <div class="grid"><div class="kpi"><small>Реклама (таргет)</small><b id="lsAds"></b></div><div class="kpi"><small>Блогеры (${S.creator==='micro'?'микро':'макро'})</small><b id="lsCr"></b></div></div>
+  <div class="note" id="lsPct" style="text-align:center;font-weight:700"></div>
+  <p style="font-size:12.5px;color:var(--soft)">Подготовка: креатив ${Math.round(clamp(35+W.content,0,100))}/100 · таргет ${Math.round(clamp(30+W.target,0,100))}/100. ${W.ap>0?`Осталось ${W.ap} действия, их можно потратить до запуска.`:''}</p>
+  <div class="row"><button class="btn" onclick="closeSheet()">Назад</button><button class="btn pri" id="goBtn">Запустить</button></div>`);
+  const r=$('#rng');r.oninput=()=>{S.share=+r.value;draw()};draw();
+  $('#goBtn').onclick=runWeek;
+}
+function mentor(R,b){
+  const t=[];
+  if(R.CTR<1.4)t.push(['Низкий CTR','Люди видят рекламу, но не кликают. Вернись к хуку и визуалу: первые секунды решают всё.']);
+  if(R.CPM>230)t.push(['Дорогие показы (CPM)','Таргет слабый или данных мало. Помогает аналитик, чистая аудитория и пиксель.']);
+  if(S.creator==='macro'&&R.ER<3&&b.fit!=='macro')t.push(['Охват ≠ вовлечение','Макро-блогеры дали охват, но аудитория холодная. Для локальной цели лучше подходят микро.']);
+  if(R.risk)t.push(['Риск блогера','Макро-блогер выпустил размещение без попадания в тон бренда. Такое бывает, поэтому нужен бриф и контроль.']);
+  if(!t.length)t.push(['Воронка работает','CPM, CTR и конверсия в балансе. Можно масштабировать, но следи, чтобы CPA не вырос.']);
+  return t[0];
+}
+function judge(R,k){const v=k.m==='cpa'?R.CPA:k.m==='roas'?R.ROAS:k.m==='er'?R.ER:k.m==='ctr'?R.CTR:R.reach;return k.op==='<='?v<=k.v:v>=k.v}
+function confetti(){
+  const cols=['#e5524d','#ffd24a','#5b8def','#3f9a5a','#ff5da2','#fff6e0'];
+  for(let i=0;i<46;i++){
+    const c=document.createElement('i');c.className='cf';
+    c.style.left=Math.random()*100+'%';c.style.background=cols[i%cols.length];
+    c.style.setProperty('--dx',(Math.random()*120-60)+'px');c.style.setProperty('--r',(Math.random()*720-360)+'deg');
+    c.style.animationDelay=(Math.random()*.5)+'s';c.style.animationDuration=(1.8+Math.random()*1.2)+'s';
+    $('#app').appendChild(c);setTimeout(()=>c.remove(),3600);
+  }
+}
+async function runWeek(){
+  const b=BRIEFS[S.week-1];
+  const chatC=(S.chat.des||S.chat.cop)?(S.chat.des&&S.chat.cop?16:8):0;
+  const chatT=(S.chat.tgt||S.chat.ana)?(S.chat.tgt&&S.chat.ana?16:8):0;
+  const cq=clamp(35+W.content+(W.acts.des&&W.acts.cop?8:0)-chatC,0,100);
+  const tq=clamp(30+W.target-chatT,0,100);
+  const R=calc(b,S.share,S.creator,cq,tq);
+  const hit=judge(R,b.kpi);
+  S.trust=clamp(S.trust+(hit?8:-6),0,100);if(hit)S.kpiHit++;
+  S.totalConv+=R.conv;S.totalSpend+=R.spend;S.totalRev+=R.rev;
+  S.hist.push({hit,R});
+  const keys=['des','cop','tgt','ana'];
+  const broken=[0,1].filter(L=>!S.coffee[L].ok&&STATIONS.some(s=>s.L===L&&PEOPLE[s.id]&&S.hired[s.id]));
+  const souls=keys.filter(k=>S.hired[k]&&S.staff[k]&&S.staff[k].trait==='soul').length;
+  for(const k in S.mood){const L=person(k).L;S.mood[k]=clamp(S.mood[k]+8-(broken.includes(L)?3:0)+souls*3,0,100)}
+  const cbroke=broken.length?`<div class="note warn">☕ Кофемашина сломана (этаж ${broken.map(l=>l+1).join(', ')}): настроение −3. Вызови мастера.</div>`:'';
+  const lowN=Object.keys(W.lowMood).map(k=>PEOPLE[k].n);
+  const clow=lowN.length?`<div class="note warn">😫 ${lowN.join(' и ')} работал(и) без настроения: результат слабее. Хвали людей, это поднимает настроение сразу.</div>`:'';
+  const m=mentor(R,b);
+  const chem=W.acts.des&&W.acts.cop?'<div class="note good">💞 Связка дизайнер + копирайтер: +8 к креативу.</div>':'';
+  const cwarn=(chatC||chatT)?`<div class="note warn">☕ Команда заболталась у кофемашины: ${chatC?'−'+chatC+' к креативу ':''}${chatT?'−'+chatT+' к таргету':''}. Нужно было позвать их работать.</div>`:'';
+  const cell=(l,v,ok)=>`<div class="kpi ${ok===true?'ok':ok===false?'bad':''}"><small>${l}</small><b>${v}</b></div>`;
+  const kk=b.kpi.m;
+  sheet(`<h2>${hit?'✅ KPI выполнен!':'⚠️ KPI не выполнен'}</h2><div class="sub">${b.t} · цель ${b.kpi.label}</div>
+  <div class="grid">
+   ${cell('Охват',fmt(R.reach),kk==='reach'?hit:null)}
+   ${cell('CTR',R.CTR.toFixed(2).replace('.',',')+' %',kk==='ctr'?hit:null)}
+   ${cell('ER',R.ER.toFixed(1).replace('.',',')+' %',kk==='er'?hit:null)}
+   ${cell('CPM',fmt(R.CPM)+' ₽',null)}
+   ${cell('Клиентов',fmt(R.conv),null)}
+   ${cell('CPA',fmt(R.CPA)+' ₽',kk==='cpa'?hit:null)}
+   ${cell('ROAS',R.ROAS.toFixed(2).replace('.',','),kk==='roas'?hit:null)}
+   ${cell('Доверие',(hit?'+8':'−6'),hit)}
+  </div>${chem}${cwarn}${clow}${cbroke}
+  <div class="note"><b>📊 ${m[0]}.</b> ${m[1]}</div>
+  <div class="note good"><b>Чему научились:</b> ${b.learn}</div>
+  <div class="row"><button class="btn pri" id="nxt">${S.week>=BRIEFS.length?'Итоги':'Следующая неделя'}</button></div>`,null);
+  lockSheet(true);
+  if(hit){confetti();sfx.win()}else sfx.lose();
+  $('#nxt').onclick=()=>{lockSheet(false);$('#ov').classList.remove('on');advance()};
+}
+
+/* =====================  ЗАКАЗЧИК ПРИДИРАЕТСЯ  ===================== */
+const COMPLAINTS=[
+ ['😒','«Ну… не знаю. Как-то всё не то. Не цепляет».'],
+ ['😠','«Логотип больше. Нет, меньше. Нет, верни как было».'],
+ ['😡','«У моего племянника в Canva выходит лучше. А он в четвёртом классе».'],
+ ['🤬','«Хочу красиво, быстро, бесплатно и чтобы вирусно!»'],
+ ['😤','«Сделайте как у конкурентов, только совсем по-другому».']
+];
+function clientArc(done){
+  const need=2+Math.floor(Math.random()*3);
+  const order=COMPLAINTS.slice().sort(()=>Math.random()-.5);
+  let round=0;
+  const face=(em,inner)=>`<div class="big">${charEl('boss',4)}<div style="font-size:34px">${em}</div></div>${inner}`;
+  const ask=()=>{
+    const c=order[round%order.length];round++;
+    const hint=round>=3?'<div class="note">Ты чувствуешь, что это не может продолжаться вечно… или может?</div>':'';
+    lockSheet(true);
+    window.__opts=[
+      ()=>{S.apPenalty=Math.min(2,S.apPenalty+1);for(const k in S.mood)if(S.hired[k])S.mood[k]=clamp(S.mood[k]-6,0,100);
+           if(round>=need)accept();else ask()},
+      ()=>reject()
+    ];
+    sheet(`<h2>Марина недовольна</h2><div class="sub">Правки · раунд ${round}</div>${face(c[0],`<p><b>${c[1]}</b></p>${hint}`)}
+    <button class="opt" onclick="pick(0)"><b>🔄 Ладно, переделаю</b><small>−1 действие на следующей неделе, команда −6 к настроению. Она может быть недовольна снова.</small></button>
+    <button class="opt" onclick="pick(1)"><b>👋 Послать нафиг</b><small>Станет легче, но доверие −25, бюджет урежут, премии и рекомендаций не будет.</small></button>`);
+    sfx.murmur(1.4);setTimeout(()=>{if(Math.random()<.65)sfx.laugh()},1100);
+  };
+  const accept=()=>{
+    S.trust=clamp(S.trust+10,0,100);S.bonus+=5000;
+    const avail=VTYPES.filter(v=>!S.clientList.some(c=>c.tid===v.id));
+    const t=avail.length?rpick(avail):null;
+    let who='знакомому бизнесмену';
+    let nc=null;
+    if(t){nc=addClient(t,2500);who=t.title}else S.clientList.push({tid:'x'+S.clientList.length,name:'Новый клиент',short:'клиент',title:'Знакомый Марины',fee:2500});
+    lockSheet(false);
+    sheet(`<h2>🥹 Принято!</h2><div class="sub">После ${round} правок</div>${face('🤩','<p><b>«Это то, что я хотела! Почему вы сразу так не сделали?»</b></p>')}
+    <div class="note good">💰 Премия 5 000 ₽ придёт на бюджет следующей недели.</div>
+    <div class="note good">🤝 Доверие +10.</div>
+    <div class="note good">💼 Марина посоветовала тебя знакомому: ${who}. Новый клиент (+2 500 ₽ к бюджету каждую неделю).</div>
+    <p>Он скоро зайдёт в дверь и поднимется на лифте к дивану.</p>
+    <div class="row"><button class="btn pri" onclick="closeSheet()">Вот это поворот</button></div>`,()=>{done();if(nc)escortClient(nc,7,true)});
+    confetti();sfx.win();setTimeout(()=>sfx.laugh(),400);
+  };
+  const reject=()=>{
+    S.trust=clamp(S.trust-25,0,100);S.wbPenalty+=4000;S.sent++;
+    for(const k in S.mood)if(S.hired[k])S.mood[k]=clamp(S.mood[k]+10,0,100);
+    lockSheet(false);
+    sheet(`<h2>👋 Всё сказано</h2><div class="sub">Правки · конец</div>${face('😮','<p>Ты высказал всё, что накопилось. В комнате тишина, а команда тихо аплодирует.</p>')}
+    <div class="note warn">Доверие −25, бюджет следующей недели −4 000 ₽. Рекомендаций от Марины не будет.</div>
+    <div class="note good">Команда в восторге: настроение +10.</div>
+    <div class="row"><button class="btn pri" onclick="closeSheet()">Выдохнуть</button></div>`,done);
+    sfx.slap();setTimeout(()=>sfx.laugh(),500);
+  };
+  ask();
+}
+function advance(){
+  if(S.week>=BRIEFS.length)return ending();
+  const hit=S.hist[S.hist.length-1].hit;
+  if(S.week===2||S.week===4||(!hit&&Math.random()<.5))return clientArc(proceed);
+  proceed();
+}
+function proceed(){
+  const next=S.week+1;
+  const ev=EVENTS[next];
+  const go=()=>{lockSheet(false);newWeek();showBrief()};
+  if(ev){
+    window.__opts=ev.opts.map(o=>()=>{
+      const g={trust:0,wbPenalty:0,carry:{content:0},mood:0,apPenalty:0};
+      const msg=o.fx(g);
+      S.trust=clamp(S.trust+g.trust,0,100);S.wbPenalty+=g.wbPenalty;S.carry.content+=g.carry.content;S.apPenalty+=g.apPenalty;
+      if(g.mood)for(const k in S.mood)S.mood[k]=clamp(S.mood[k]+g.mood,0,100);
+      sheet(`<h2>${ev.t}</h2><p>${msg}</p><div class="row"><button class="btn pri" onclick="closeSheet()">Дальше</button></div>`,go);
+    });
+    sheet(`<h2>⚡ ${ev.t}</h2><p>${ev.txt}</p>${ev.opts.map((o,i)=>`<button class="opt" onclick="pick(${i})"><b>${o.l}</b><small>${o.d}</small></button>`).join('')}`);
+    lockSheet(true);
+  }else go();
+}
+function ending(){
+  const rank=S.kpiHit>=5?'⭐ Head of SMM':S.kpiHit>=3?'🚀 Старший SMM-менеджер':'🌱 SMM-менеджер в росте';
+  const roas=(S.totalRev/S.totalSpend).toFixed(2).replace('.',',');
+  sheet(`<h2>🏁 Итоги квартала</h2><div class="sub">${rank}</div>
+  <div class="grid"><div class="kpi"><small>KPI выполнено</small><b>${S.kpiHit}/${BRIEFS.length}</b></div><div class="kpi"><small>Доверие клиента</small><b>${Math.round(S.trust)}%</b></div>
+  <div class="kpi"><small>Клиентов привлечено</small><b>${fmt(S.totalConv)}</b></div><div class="kpi"><small>Общий ROAS</small><b>${roas}</b></div>
+  <div class="kpi"><small>Клиентов в портфеле</small><b>👥 ${S.clientList.length}</b></div><div class="kpi"><small>Заказчиков послано</small><b>${S.sent}</b></div></div>
+  <div class="note good">Ты прошёл путь от «одна кофейня» до квартального отчёта: CPM → CTR → CPA → ROAS, микро и макро-блогеры, антикризис, команда и бюджет.</div>
+  <div class="row"><button class="btn pri" onclick="location.reload()">Сыграть ещё</button></div>`);
+  lockSheet(true);confetti();sfx.win();
+}
+
+/* =====================  СТАРТ  ===================== */
+$('#bBrief').onclick=()=>{if(!LOCK&&!isOpen())showBrief()};
+$('#bLaunch').onclick=()=>{if(!LOCK&&!isOpen())launchSheet()};
+buildSprites();
+fresh();initRivals();buildScene();buildOutside();newWeek();
+sheet(`<h2>☕ SMM-офис</h2><div class="sub">Пиксельная версия · 6 недель</div>
+<p>Ты вошёл в офис и возглавил SMM-отдел. Ходи по зданию (нажимай на людей и места), готовь креатив и таргет, дели бюджет между рекламой и блогерами. Наверху сидят клиенты на диванах у панорамного окна.</p>
+<div class="note">Сотрудники ходят по офису и пьют кофе. Если у человека плохое настроение, он работает хуже: похвали его. Не хватает рук? Нажми на пустой стол и открой вакансию: трое кандидатов придут к входу. Подойди к ним сам (на это минута, иначе уйдут), выбери двоих для собеседования и реши, кого брать. Если в дверь вошёл посетитель, успей с ним поговорить: возможно, это новый клиент.</div>
+<div class="row"><button class="btn pri" onclick="closeSheet();showBrief()">Начать</button></div>`);
+</script>
+<!-- SMM-офис: пиксель · v1.2.2 (кандидаты приходят ко входу; новые клиенты едут на лифте) -->
+</body>
+</html>
